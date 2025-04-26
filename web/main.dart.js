@@ -76674,7 +76674,7 @@ return new A.eW(B.bg,B.cT,B.bl,this.a?A.b([B.ib,B.AQ],s):A.b([B.lo,B.AN],s),null
 $S:184}
 A.aee.prototype={
 $2(a,b){var s=null,r=b.b<600?B.cF:B.y,q=this.a,p=this.b
-return A.cQ(A.b([q.vf(B.e6,"https://github.com/Onnesok",p,"GitHub"),A.dg(s,s,16),q.vf(B.fA,"https://linkedin.com/in/ratulhasanonn",p,"LinkedIn"),A.dg(s,s,16),q.vf(B.CV,"https://www.instagram.com/ratul.hasan.404",p,"Instagram"),A.dg(s,s,16),q.vf(B.CW,"mailto:ratulhasanonn@gmail.com",p,"Email")],t.p),B.E,r,B.A)},
+return A.cQ(A.b([q.vf(B.e6,"https://github.com/Onnesok",p,"GitHub"),A.dg(s,s,16),q.vf(B.fA,"https://linkedin.com/in/ratulhasanonn",p,"LinkedIn"),A.dg(s,s,16),q.vf(B.CV,"https://www.instagram.com/ratul.hasan.404",p,"Instagram"),A.dg(s,s,16),q.vf(B.CW,"mailto:onnesok@gmail.com",p,"Email")],t.p),B.E,r,B.A)},
 $S:487}
 A.ae9.prototype={
 $0(){var s=0,r=A.N(t.H),q=this,p
