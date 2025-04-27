@@ -21,8 +21,11 @@
 
   <style>
     /* Preloader styles */
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
       background: black;
       overflow: hidden;
     }
@@ -37,12 +40,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
+      z-index: 999999; /* really high z-index */
     }
 
     .loader {
       border: 8px solid #f3f3f3; /* Light grey */
-      border-top: 8px solid blue; /* Blue loader */
+      border-top: 8px solid blue; /* Blue spinner */
       border-radius: 50%;
       width: 60px;
       height: 60px;
@@ -61,16 +64,20 @@
     <div class="loader"></div>
   </div>
 
-  <!-- Flutter app -->
+  <!-- Flutter App -->
   <script src="flutter_bootstrap.js" async></script>
 
   <script>
-    // Hide the preloader when Flutter app has loaded
     window.addEventListener('load', function () {
-      var preloader = document.getElementById('preloader');
-      if (preloader) {
-        preloader.style.display = 'none';
-      }
+      // Wait a little bit to ensure Flutter is fully rendered
+      setTimeout(function() {
+        var preloader = document.getElementById('preloader');
+        if (preloader) {
+          preloader.style.opacity = '0';
+          preloader.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => preloader.remove(), 500); // remove after fade out
+        }
+      }, 500); // small delay
     });
   </script>
 </body>
