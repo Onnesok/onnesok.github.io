@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base href="/web/">
+  <base href="/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -42,7 +42,7 @@
 
     .loader {
       border: 8px solid #f3f3f3; /* Light grey */
-      border-top: 8px solid blue; /* Blue */
+      border-top: 8px solid blue; /* Blue loader */
       border-radius: 50%;
       width: 60px;
       height: 60px;
@@ -61,10 +61,11 @@
     <div class="loader"></div>
   </div>
 
+  <!-- Flutter app -->
   <script src="flutter_bootstrap.js" async></script>
 
   <script>
-    // When Flutter has loaded, remove the preloader
+    // Hide the preloader when Flutter app has loaded
     window.addEventListener('load', function () {
       var preloader = document.getElementById('preloader');
       if (preloader) {
