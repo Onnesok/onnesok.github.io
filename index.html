@@ -19,8 +19,14 @@
   <title>portfolio</title>
   <link rel="manifest" href="manifest.json">
 
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "1113618080";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+
   <style>
-    /* Preloader styles */
     html, body {
       margin: 0;
       padding: 0;
@@ -40,7 +46,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 999999; /* really high z-index */
+      z-index: 999999;
     }
 
     .loader {
@@ -64,20 +70,28 @@
     <div class="loader"></div>
   </div>
 
-  <!-- Flutter App -->
-  <script src="flutter_bootstrap.js" async></script>
-
   <script>
-    window.addEventListener('load', function () {
-      // Wait a little bit to ensure Flutter is fully rendered
-      setTimeout(function() {
-        var preloader = document.getElementById('preloader');
-        if (preloader) {
-          preloader.style.opacity = '0';
-          preloader.style.transition = 'opacity 0.5s ease';
-          setTimeout(() => preloader.remove(), 500); // remove after fade out
+    window.addEventListener('load', function(ev) {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+
+            // After Flutter app starts, hide preloader
+            setTimeout(function() {
+              var preloader = document.getElementById('preloader');
+              if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => preloader.remove(), 500); // Fade out and remove
+              }
+            }, 500); // Delay to let Flutter render properly
+          });
         }
-      }, 500); // small delay
+      });
     });
   </script>
 </body>
