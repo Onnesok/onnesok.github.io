@@ -76959,52 +76959,50 @@ return A.Q(A.px(A.e4(a,0,null),B.ee),$async$uu)
 case 2:if(!c)throw A.h(A.cU("Could not launch "+a))
 return A.L(null,r)}})
 return A.M($async$uu,r)},
-qi(){var s=0,r=A.N(t.H),q=1,p,o=[],n=this,m,l,k,j,i,h,g,f,e,d,c
+qi(){var s=0,r=A.N(t.H),q=1,p,o=[],n=this,m,l,k,j,i,h,g,f,e,d
 var $async$qi=A.J(function(a,b){if(a===1){p=b
-s=q}while(true)switch(s){case 0:e=n.d
-d=e.gJ()
-d.e=!0
-d.Ju()
-s=d.j1()?2:3
+s=q}while(true)switch(s){case 0:f=n.d
+e=f.gJ()
+e.e=!0
+e.Ju()
+s=e.j1()?2:3
 break
 case 2:n.ac(new A.adr(n))
 q=5
-d=n.r
-l=d.a.a
-k=n.e
-j=k.a.a
-i=n.f
-h=i.a.a
-g=n.w
-m=A.SV(null,"ratul.hasan@g.bracu.ac.bd",A.aJ(["subject",l,"body","From: "+j+" <"+h+">\n\n"+g.a.a,"cc",h],t.N,t.z),"mailto")
+e=n.e
+k=n.f
+j=n.w
+m="From: "+e.a.a+"\nEmail: "+k.a.a+"\n\nMessage:\n"+j.a.a+"\n"
+i=n.r
+l=A.SV(null,"ratul.hasan@g.bracu.ac.bd",A.aJ(["subject",i.a.a,"body",m],t.N,t.z),"mailto")
 s=11
-return A.Q(A.ald(m),$async$qi)
+return A.Q(A.ald(l),$async$qi)
 case 11:s=b?8:10
 break
 case 8:s=12
-return A.Q(A.px(m,B.ee),$async$qi)
-case 12:l=n.c
-if(l!=null){l=l.ak(t.Pu)
-l.toString
-l.f.z7(B.LZ)
-e.gJ().f9()
+return A.Q(A.px(l,B.ee),$async$qi)
+case 12:h=n.c
+if(h!=null){h=h.ak(t.Pu)
+h.toString
+h.f.z7(B.LZ)
+f.gJ().f9()
+e.jO(B.hE)
 k.jO(B.hE)
 i.jO(B.hE)
-d.jO(B.hE)
-g.jO(B.hE)}s=9
+j.jO(B.hE)}s=9
 break
-case 10:e=n.c
-if(e!=null){e=e.ak(t.Pu)
-e.toString
-e.f.z7(B.M0)}case 9:o.push(7)
+case 10:f=n.c
+if(f!=null){f=f.ak(t.Pu)
+f.toString
+f.f.z7(B.M0)}case 9:o.push(7)
 s=6
 break
 case 5:q=4
-c=p
-e=n.c
-if(e!=null){e=e.ak(t.Pu)
-e.toString
-e.f.z7(B.M_)}o.push(7)
+d=p
+f=n.c
+if(f!=null){f=f.ak(t.Pu)
+f.toString
+f.f.z7(B.M_)}o.push(7)
 s=6
 break
 case 4:o=[1]
