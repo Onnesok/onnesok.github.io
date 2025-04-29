@@ -76933,7 +76933,7 @@ n=A.h_(B.Di,A.U(a).ax.b,20)
 m=A.c3(l,l,8)
 return A.Zk(A.cx(A.b([k,B.y_,s,B.bJ,r,B.bJ,q,B.kc,o,B.bJ,A.cf(A.b([A.fZ(A.cf(A.b([n,m,A.fZ(A.b5("Computer Science & Engineering",l,B.aS,l,A.bP(l,l,b?B.as:B.af,l,l,l,l,l,l,l,l,14,l,l,l,l,l,!0,l,l,l,l,l,l,l,l),l,l,l),1)],p),B.A,B.t,B.y),1)],p),B.A,B.t,B.y)],p),B.a3,B.t,B.y),B.r,B.au)},
 Ia(a,b){var s=null,r="Sensor Integration",q=A.bs(a,s,t.w).w.a.a>800?24:20,p=t.s
-return A.amZ(A.cx(A.b([A.b5("My Skills",s,s,s,A.bP(s,s,b?B.bp:B.b5,s,s,s,s,s,s,s,s,q,s,s,B.aa,s,s,!0,s,s,s,s,s,s,s,s),s,s,s),B.y_,this.zN("Robotics",A.b(["Robot Operating System (ROS)","Computer Vision",r,"Motion Planning","Control Systems"],p),b,a),B.bJ,this.zN("Software Development",A.b(["Flutter & Dart","Python","JavaScript/TypeScript","React & Node.js","SQL & NoSQL Databases"],p),b,a),B.bJ,this.zN("Hardware Design",A.b(["Circuit Design","PCB Layout","Microcontroller Programming",r,"3D Modeling"],p),b,a)],t.p),B.a3,B.t,B.y),B.au)},
+return A.amZ(A.cx(A.b([A.b5("My Skills",s,s,s,A.bP(s,s,b?B.bp:B.b5,s,s,s,s,s,s,s,s,q,s,s,B.aa,s,s,!0,s,s,s,s,s,s,s,s),s,s,s),B.y_,this.zN("Robotics",A.b(["Robot Operating System (ROS)","Computer Vision",r,"Motion Planning","Control Systems"],p),b,a),B.bJ,this.zN("Software Development",A.b(["Flutter & Dart","Python","JavaScript/TypeScript","Node.js","SQL & NoSQL Databases"],p),b,a),B.bJ,this.zN("Hardware Design",A.b(["3D Modeling","3D Simulation","Basic Circuit Design","Microcontroller Programming",r],p),b,a)],t.p),B.a3,B.t,B.y),B.au)},
 zN(a,b,c,d){var s=null,r=A.bs(d,s,t.w).w.a.a>800?20:18
 r=A.b([A.b5(a,s,s,s,A.bP(s,s,c?B.as:B.af,s,s,s,s,s,s,s,s,r,s,s,B.aa,s,s,!0,s,s,s,s,s,s,s,s),s,s,s),B.LK],t.p)
 B.b.M(r,new A.a7(b,new A.UQ(c),A.Z(b).i("a7<1,e>")))
@@ -77276,7 +77276,7 @@ f=h?A.D(B.c.P(76.5),33,33,33):A.D(B.c.P(76.5),245,245,245)
 e=A.cw(12)
 c=A.jf(h?B.aJ:B.as,1)
 b=A.dD().$3$color$fontSize$fontWeight(h?B.as:B.aJ,24,B.G)
-m=A.KL(A.l6(A.bx(a0,A.nd(A.amt(A.b([A.aoc("Full Stack Developer",A.b7(0,100)),A.aoc("UI/UX Designer",A.b7(0,100)),A.aoc("Robotics Engineer",A.b7(0,100))],o),!0,A.b7(0,2000),!0),a0,a0,B.bK,!0,b,a0,a0,B.aj),B.l,a0,a0,new A.bt(f,a0,c,e,a0,a0,B.S),a0,a0,a0,new A.an(16,8,16,8),a0,a0,a0),g,j),l,m)
+m=A.KL(A.l6(A.bx(a0,A.nd(A.amt(A.b([A.aoc("Full Stack Developer",A.b7(0,100)),A.aoc("UI/UX Designer",A.b7(0,100)),A.aoc("Robotics Enthusiast",A.b7(0,100))],o),!0,A.b7(0,2000),!0),a0,a0,B.bK,!0,b,a0,a0,B.aj),B.l,a0,a0,new A.bt(f,a0,c,e,a0,a0,B.S),a0,a0,a0,new A.an(16,8,16,8),a0,a0,a0),g,j),l,m)
 l=A.b7(0,800)
 j=A.b7(0,600)
 g=A.b7(0,a1)
