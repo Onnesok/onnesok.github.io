@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animate_do/animate_do.dart';
@@ -7,6 +8,7 @@ import 'package:portfolio/features/shared/utils/theme_provider.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/rendering.dart';
 
 class Header extends StatefulWidget {
   final VoidCallback onViewWorkPressed;
@@ -22,9 +24,11 @@ class Header extends StatefulWidget {
   State<Header> createState() => _HeaderState();
 }
 
-class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
+class _HeaderState extends State<Header> with TickerProviderStateMixin {
   late AnimationController _backgroundController;
   late Animation<double> _backgroundAnimation;
+  late AnimationController _flickerController;
+  bool _animationsStarted = false;
   final List<Particle> _particles = List.generate(
     50,
     (index) => Particle(
@@ -54,12 +58,27 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
       begin: 0,
       end: 2 * pi,
     ).animate(_backgroundController);
+
+    _flickerController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _animationsStarted = true;
+        });
+        _flickerController.forward(from: 0);
+      }
+    });
   }
 
   @override
   void dispose() {
     _backgroundController.dispose();
     _scrollController.dispose();
+    _flickerController.dispose();
     super.dispose();
   }
 
@@ -70,16 +89,146 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < 600;
 
-    return SizedBox(
-      height: screenHeight,
-      width: screenWidth,
-      child: Stack(
-        children: [
-          _buildAnimatedBackground(screenWidth, screenHeight, isDark),
-          _buildGradientOverlay(isDark),
-          _buildMainContent(context, isDark, isSmall, screenWidth),
-        ],
-      ),
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: _buildAnimatedBackground(screenWidth, screenHeight, isDark),
+        ),
+        Positioned.fill(
+          child: _buildGradientOverlay(isDark),
+        ),
+        Center(
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: 1200,
+            ),
+            padding: EdgeInsets.symmetric(
+              horizontal: isSmall ? 20 : screenWidth * 0.06,
+              vertical: 40,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: isSmall ? double.infinity : screenWidth * 0.6,
+                  child: Column(
+                    crossAxisAlignment: isSmall ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+                    children: [
+                      _buildProfileSection(context, isDark, isSmall),
+                      const SizedBox(height: 40),
+                      _buildNameSection(context, isDark, isSmall),
+                      const SizedBox(height: 24),
+                      _buildSocialIcons(isDark, isSmall),
+                      const SizedBox(height: 32),
+                      // Typewriter effect before buttons
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: _animationsStarted ? Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                width: 2,
+                                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                              ),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Theme.of(context).colorScheme.surface.withOpacity(0.7),
+                                  Theme.of(context).colorScheme.background.withOpacity(0.5),
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.08),
+                                  blurRadius: 16,
+                                  offset: Offset(0, 8),
+                                ),
+                              ],
+                            ),
+                            child: ShaderMask(
+                              shaderCallback: (bounds) => LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Theme.of(context).colorScheme.primary,
+                                  Theme.of(context).colorScheme.secondary,
+                                ],
+                              ).createShader(bounds),
+                              child: AnimatedTextKit(
+                                animatedTexts: [
+                                  TypewriterAnimatedText(
+                                    'Robotics enthusiast',
+                                    textStyle: TextStyle(
+                                      fontSize: isSmall ? 22 : 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 8,
+                                          color: Colors.black.withOpacity(0.25),
+                                          offset: Offset(2, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    speed: Duration(milliseconds: 80),
+                                  ),
+                                  TypewriterAnimatedText(
+                                    'Full stack developer',
+                                    textStyle: TextStyle(
+                                      fontSize: isSmall ? 22 : 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 8,
+                                          color: Colors.black.withOpacity(0.25),
+                                          offset: Offset(2, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    speed: Duration(milliseconds: 80),
+                                  ),
+                                  TypewriterAnimatedText(
+                                    'UI/UX designer',
+                                    textStyle: TextStyle(
+                                      fontSize: isSmall ? 22 : 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                          blurRadius: 8,
+                                          color: Colors.black.withOpacity(0.25),
+                                          offset: Offset(2, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    speed: Duration(milliseconds: 80),
+                                  ),
+                                ],
+                                repeatForever: true,
+                                pause: Duration(milliseconds: 1200),
+                                displayFullTextOnTap: true,
+                                stopPauseOnTap: true,
+                              ),
+                            ),
+                          ) : SizedBox.shrink(),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      _buildButtons(context, isDark, isSmall),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -127,49 +276,22 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildMainContent(BuildContext context, bool isDark, bool isSmall, double screenWidth) {
-    return Positioned.fill(
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isSmall ? 20 : screenWidth * 0.15,
-              vertical: isSmall ? 40 : 60,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildProfileSection(context, isDark, isSmall),
-                const SizedBox(height: 40),
-                _buildNameSection(context, isDark, isSmall),
-                const SizedBox(height: 24),
-                _buildSocialIcons(isDark, isSmall),
-                const SizedBox(height: 32),
-                _buildButtons(context, isDark, isSmall),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildProfileSection(BuildContext context, bool isDark, bool isSmall) {
     return Column(
+      crossAxisAlignment: isSmall ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         _buildProfileImage(context),
         const SizedBox(height: 24),
         Text(
           'Hello, I\'m',
           style: GoogleFonts.inter(
-            fontSize: 28,
+            fontSize: isSmall ? 28 : 32,
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.5,
             height: 1.2,
           ),
-          textAlign: TextAlign.center,
+          textAlign: isSmall ? TextAlign.center : TextAlign.start,
         ),
       ],
     );
@@ -230,6 +352,7 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
 
   Widget _buildNameSection(BuildContext context, bool isDark, bool isSmall) {
     return Column(
+      crossAxisAlignment: isSmall ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         _buildAnimatedName(context, isDark, isSmall),
         const SizedBox(height: 16),
@@ -239,107 +362,116 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
   }
 
   Widget _buildAnimatedName(BuildContext context, bool isDark, bool isSmall) {
-    return Container(
-      width: double.infinity,
-      child: ShaderMask(
-        shaderCallback: (bounds) => LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.secondary,
+    return ShaderMask(
+      shaderCallback: (bounds) => LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.secondary,
+        ],
+      ).createShader(bounds),
+      child: DefaultTextStyle(
+        style: GoogleFonts.inter(
+          fontSize: isSmall ? 36 : 52,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          height: 1.1,
+        ),
+        child: AnimatedTextKit(
+          animatedTexts: [
+            WavyAnimatedText(
+              'Ratul Hasan',
+              speed: Duration(milliseconds: 200),
+            ),
           ],
-        ).createShader(bounds),
-        child: DefaultTextStyle(
-          style: GoogleFonts.inter(
-            fontSize: isSmall ? 36 : 48,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            height: 1.1,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedTextKit(
-                animatedTexts: [
-                  WavyAnimatedText(
-                    'Ratul Hasan',
-                    speed: Duration(milliseconds: 200),
-                  ),
-                ],
-                totalRepeatCount: 2,
-                displayFullTextOnTap: true,
-                stopPauseOnTap: true,
-              ),
-            ],
-          ),
+          totalRepeatCount: 2,
+          displayFullTextOnTap: true,
+          stopPauseOnTap: true,
         ),
       ),
     );
   }
 
   Widget _buildAnimatedRole(BuildContext context, bool isDark, bool isSmall) {
-    return Container(
-      width: double.infinity,
-      child: DefaultTextStyle(
-        style: GoogleFonts.firaCode(
-          fontSize: isSmall ? 12 : 20,
-          color: isDark ? Colors.grey[300] : Colors.grey[700],
-          fontWeight: FontWeight.w500,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedTextKit(
-              animatedTexts: [
-                WavyAnimatedText(
-                  'Robotics Enthusiast & Dreamer',
-                  speed: Duration(milliseconds: 200),
+    final fontSize = isSmall ? 14.0 : 18.0;
+    return _animationsStarted
+        ? Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.blueAccent,
+                      Colors.purpleAccent,
+                    ],
+                  ).createShader(bounds),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        '</ Robotics Enthusiast & Dreamer />',
+                        textStyle: GoogleFonts.montserrat(
+                          fontSize: fontSize - 4,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 0.7,
+                          color: Colors.white,
+                          shadows: [],
+                        ),
+                        speed: Duration(milliseconds: 60),
+                      ),
+                    ],
+                    isRepeatingAnimation: false,
+                  ),
                 ),
-              ],
-              totalRepeatCount: 2,
-              displayFullTextOnTap: true,
-              stopPauseOnTap: true,
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          )
+        : SizedBox.shrink();
   }
 
   Widget _buildSocialIcons(bool isDark, bool isSmall) {
-    return Row(
-      mainAxisAlignment: isSmall ? MainAxisAlignment.center : MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _socialIconButton(
-          FontAwesomeIcons.github,
-          'https://github.com/Onnesok',
-          isDark,
-          'GitHub',
-        ),
-        SizedBox(width: 16),
-        _socialIconButton(
-          FontAwesomeIcons.linkedin,
-          'https://www.linkedin.com/in/ratul-hasan-45911b245/',
-          isDark,
-          'LinkedIn',
-        ),
-        SizedBox(width: 16),
-        _socialIconButton(
-          FontAwesomeIcons.instagram,
-          'https://www.instagram.com/ratul.hasan.404',
-          isDark,
-          'Instagram',
-        ),
-        SizedBox(width: 16),
-        _socialIconButton(
-          FontAwesomeIcons.solidEnvelope,
-          'mailto:ratul.hasan@g.bracu.ac.bd',
-          isDark,
-          'Email',
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.only(
+        left: isSmall ? 0 : 0,
+      ),
+      child: Row(
+        mainAxisAlignment: isSmall ? MainAxisAlignment.center : MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _socialIconButton(
+            FontAwesomeIcons.github,
+            'https://github.com/Onnesok',
+            isDark,
+            'GitHub',
+          ),
+          SizedBox(width: 16),
+          _socialIconButton(
+            FontAwesomeIcons.linkedin,
+            'https://www.linkedin.com/in/ratul-hasan-45911b245/',
+            isDark,
+            'LinkedIn',
+          ),
+          SizedBox(width: 16),
+          _socialIconButton(
+            FontAwesomeIcons.instagram,
+            'https://www.instagram.com/ratul.hasan.404',
+            isDark,
+            'Instagram',
+          ),
+          SizedBox(width: 16),
+          _socialIconButton(
+            FontAwesomeIcons.solidEnvelope,
+            'mailto:ratul.hasan@g.bracu.ac.bd',
+            isDark,
+            'Email',
+          ),
+        ],
+      ),
     );
   }
 
@@ -364,16 +496,21 @@ class _HeaderState extends State<Header> with SingleTickerProviderStateMixin {
       ),
     ];
 
-    return isSmall
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: buttons,
-          )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: buttons,
-          );
+    return Container(
+      padding: EdgeInsets.only(
+        left: isSmall ? 0 : 0,
+      ),
+      child: isSmall
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: buttons,
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: buttons,
+            ),
+    );
   }
 
   Widget _buildButton({

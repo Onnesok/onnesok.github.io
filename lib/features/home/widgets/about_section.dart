@@ -111,7 +111,7 @@ class _AboutSectionState extends State<AboutSection> with TickerProviderStateMix
                   child: Text(
                     'About Me',
                     style: TextStyle(
-                      fontSize: isWideScreen ? 32 : 24,
+                      fontSize: isWideScreen ? 40 : 32,
                       fontWeight: FontWeight.bold,
                       color: isDark ? Colors.white : Colors.black,
                     ),
