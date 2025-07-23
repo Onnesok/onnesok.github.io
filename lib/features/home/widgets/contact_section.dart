@@ -232,7 +232,7 @@ ${_messageController.text}
               SizedBox(height: isSmall ? 12 : 18),
               _buildContactInfoItem(
                 icon: Icons.phone,
-                text: '+880 1234 567890',
+                text: '+8801700595246',
                 colorScheme: colorScheme,
                 isSmall: isSmall,
               ),
