@@ -66,8 +66,10 @@ class Footer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    Wrap(
+                      alignment: WrapAlignment.end,
+                      spacing: 0,
+                      runSpacing: 4,
                       children: [
                         _buildSocialIconButton(FontAwesomeIcons.github, 'https://github.com/Onnesok', colorScheme),
                         _buildSocialIconButton(FontAwesomeIcons.linkedin, 'https://www.linkedin.com/in/ratul-hasan-45911b245/', colorScheme),

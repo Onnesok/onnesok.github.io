@@ -98,6 +98,86 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
               ),
             ),
           ),
+          // Navbar at the top
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(isSmall ? 0 : 18),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: isSmall ? 8 : 16, sigmaY: isSmall ? 8 : 16),
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isSmall ? 10 : 32,
+                    vertical: isSmall ? 12 : 14,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: isSmall
+                        ? [
+                            Colors.black.withOpacity(0.10),
+                            Colors.transparent,
+                          ]
+                        : [
+                            Colors.white.withOpacity(0.10),
+                            Colors.blueGrey.withOpacity(0.08),
+                            Colors.transparent,
+                          ],
+                    ),
+                    borderRadius: BorderRadius.circular(isSmall ? 0 : 18),
+                    border: isSmall ? null : Border.all(
+                      color: Colors.white.withOpacity(0.10),
+                      width: 1.0,
+                    ),
+                    boxShadow: isSmall ? null : [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.04),
+                        blurRadius: 12,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (!isSmall)
+                        Row(
+                          children: [
+                            _HeaderNavButton(label: 'About', onTap: widget.onViewWorkPressed),
+                            SizedBox(width: 8),
+                            _HeaderNavButton(label: 'Projects', onTap: widget.onViewWorkPressed),
+                            SizedBox(width: 8),
+                            _HeaderNavButton(label: 'Contact', onTap: widget.onContactPressed),
+                          ],
+                        )
+                      else
+                        IconButton(
+                          icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.primary),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) {
+                                return GlassmorphicNavSheet(
+                                  onAbout: widget.onViewWorkPressed,
+                                  onProjects: widget.onViewWorkPressed,
+                                  onContact: widget.onContactPressed,
+                                );
+                              },
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           // Main content (no color/decoration)
           Center(
             child: Container(
@@ -713,4 +793,97 @@ class ParticlesPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(ParticlesPainter oldDelegate) => true;
+} 
+
+// Add the _HeaderNavButton widget
+class _HeaderNavButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  const _HeaderNavButton({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onTap,
+      style: TextButton.styleFrom(
+        foregroundColor: Theme.of(context).colorScheme.primary,
+        textStyle: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
+      ),
+      child: Text(label),
+    );
+  }
+} 
+
+// Glassmorphic modal bottom sheet for mobile nav
+class GlassmorphicNavSheet extends StatelessWidget {
+  final VoidCallback onAbout;
+  final VoidCallback onProjects;
+  final VoidCallback onContact;
+  const GlassmorphicNavSheet({required this.onAbout, required this.onProjects, required this.onContact});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.white.withOpacity(0.13),
+                Colors.blueGrey.withOpacity(0.10),
+                Colors.transparent,
+              ],
+            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.10),
+              width: 1.0,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 16,
+                offset: Offset(0, -2),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _HeaderNavButton(
+                label: 'About',
+                onTap: () {
+                  Navigator.pop(context);
+                  onAbout();
+                },
+              ),
+              const SizedBox(height: 12),
+              _HeaderNavButton(
+                label: 'Projects',
+                onTap: () {
+                  Navigator.pop(context);
+                  onProjects();
+                },
+              ),
+              const SizedBox(height: 12),
+              _HeaderNavButton(
+                label: 'Contact',
+                onTap: () {
+                  Navigator.pop(context);
+                  onContact();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 } 
