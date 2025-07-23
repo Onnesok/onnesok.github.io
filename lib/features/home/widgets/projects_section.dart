@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:math' as math;
 import 'dart:ui';
 import '../pages/project_details_page.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class ProjectsSection extends StatefulWidget {
   const ProjectsSection({super.key});
@@ -19,18 +20,19 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
   late AnimationController _animationController;
   late Animation<double> _animation;
   bool _showHardwareProjects = true; // Toggle between hardware and software projects
+  static const int _particleCount = 6; // Fewer for performance
   final List<Particle> _particles = List.generate(
-    50, // Reduced from 100 to 50 particles
+    _particleCount,
     (index) => Particle(
       position: Offset(
         math.Random().nextDouble() * 2000,
-        math.Random().nextDouble() * 1000,
+        math.Random().nextDouble() * 400,
       ),
       velocity: Offset(
-        math.Random().nextDouble() * 1 - 0.5, // Reduced velocity
-        math.Random().nextDouble() * 1 - 0.5, // Reduced velocity
+        math.Random().nextDouble() * 0.3 - 0.15,
+        math.Random().nextDouble() * 0.3 - 0.15,
       ),
-      radius: math.Random().nextDouble() * 1.5 + 0.5, // Reduced size
+      radius: math.Random().nextDouble() * 1.2 + 0.5,
     ),
   );
 
@@ -38,7 +40,7 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(seconds: 6), // Increased duration for smoother animation
+      duration: const Duration(seconds: 18), // Slower for performance
       vsync: this,
     )..repeat();
 
@@ -56,159 +58,110 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isWideScreen = MediaQuery.of(context).size.width > 800;
-    
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark 
-          ? Colors.black.withOpacity(0.7)
-          : Colors.grey[50]!.withOpacity(0.7),
-      ),
-      child: Stack(
-        children: [
-          // Animated Background with reduced update frequency
-          Positioned.fill(
-            child: AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                // Only update particles every other frame
-                if (_animationController.value % 0.1 < 0.05) {
-                  for (var particle in _particles) {
-                    particle.update(MediaQuery.of(context).size);
-                  }
-                }
-                return RepaintBoundary(
-                  child: CustomPaint(
-                    painter: ParticlesPainter(
-                      particles: _particles,
-                      isDark: isDark,
-                    ),
-                  ),
-                );
-              },
+    final colorScheme = Theme.of(context).colorScheme;
+    final width = MediaQuery.of(context).size.width;
+    final isWideScreen = width > 800;
+    final isSmall = width < 600;
+    final projects = _showHardwareProjects ? hardwareProjects : softwareProjects;
+
+    final cardWidth = isSmall ? width - 32 : 340.0;
+    final cardHeight = isSmall ? 320.0 : 390.0;
+
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Column(
+            children: [
+              Text(
+                'Featured Projects',
+                style: GoogleFonts.inter(
+                  fontSize: isWideScreen ? 48 : (isSmall ? 26 : 36),
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.primary,
+                  height: 1.1,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: isSmall ? 8 : 16),
+              Text(
+                'A showcase of my best work in robotics and software development',
+                style: GoogleFonts.inter(
+                  fontSize: isWideScreen ? 18 : (isSmall ? 14 : 16),
+                  color: colorScheme.onSurface.withOpacity(0.7),
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: isSmall ? 20 : 40),
+        _buildCategoryToggle(false),
+        SizedBox(height: isSmall ? 16 : 32),
+        Wrap(
+          spacing: isSmall ? 8 : 24,
+          runSpacing: isSmall ? 16 : 32,
+          alignment: WrapAlignment.center,
+          children: [
+            for (int index = 0; index < projects.length; index++)
+              _buildProjectCardHorizontal(
+                context,
+                projects[index],
+                index,
+                false,
+                cardWidth,
+                cardHeight,
+                isSmall,
+              ),
+          ],
+        ),
+        SizedBox(height: isSmall ? 24 : 40),
+        Center(
+          child: ElevatedButton.icon(
+            onPressed: () => _launchUrl('https://github.com/Onnesok?tab=repositories'),
+            icon: Icon(Icons.arrow_forward),
+            label: Text('View All Projects', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
+              padding: EdgeInsets.symmetric(horizontal: isSmall ? 18 : 28, vertical: isSmall ? 12 : 18),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(isSmall ? 8 : 14)),
+              textStyle: GoogleFonts.inter(fontSize: isSmall ? 14 : 16),
+              elevation: 2,
             ),
           ),
-          // Content
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: isWideScreen ? 40 : 20,
-              vertical: isWideScreen ? 80 : 60,
-            ),
-            child: Column(
-              children: [
-                SlideInDown(
-                  duration: const Duration(milliseconds: 800), // Reduced animation duration
-                  child: Column(
-                    children: [
-                      Text(
-                        'Featured Projects',
-                        style: GoogleFonts.inter(
-                          fontSize: isWideScreen ? 48 : 36,
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : Colors.black87,
-                          height: 1.1,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'A showcase of my best work in robotics and software development',
-                        style: GoogleFonts.inter(
-                          fontSize: isWideScreen ? 18 : 16,
-                          color: isDark ? Colors.grey.shade300 : Colors.grey.shade700,
-                          height: 1.5,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+        ),
+      ],
+    );
+
+    return Stack(
+      children: [
+        RepaintBoundary(
+          child: AnimatedBuilder(
+            animation: _animationController,
+            builder: (context, child) {
+              for (var particle in _particles) {
+                particle.update(Size(MediaQuery.of(context).size.width, isSmall ? 400 : 600));
+              }
+              return CustomPaint(
+                size: Size(MediaQuery.of(context).size.width, isSmall ? 400 : 600),
+                painter: ParticlesPainter(
+                  particles: _particles,
+                  isDark: true,
                 ),
-                const SizedBox(height: 60),
-                _buildCategoryToggle(isDark),
-                const SizedBox(height: 40),
-                _buildProjectGrid(
-                  _showHardwareProjects ? hardwareProjects : softwareProjects,
-                  isDark,
-                ),
-                const SizedBox(height: 60),
-                FadeInUp(
-                  duration: const Duration(milliseconds: 800), // Reduced animation duration
-                  child: Center(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final isMobile = constraints.maxWidth <= 600;
-                        final buttonPadding = isMobile 
-                          ? const EdgeInsets.symmetric(horizontal: 16, vertical: 12)
-                          : const EdgeInsets.symmetric(horizontal: 24, vertical: 16);
-                        final fontSize = isMobile ? 14.0 : 16.0;
-                        final iconSize = isMobile ? 16.0 : 18.0;
-                        final iconSpacing = isMobile ? 6.0 : 8.0;
-                        
-                        return MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: isDark 
-                                  ? [Colors.blue.shade900, Colors.purple.shade900]
-                                  : [Colors.blue.shade400, Colors.purple.shade400],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: isDark 
-                                    ? Colors.blue.shade900.withOpacity(0.3)
-                                    : Colors.blue.shade200.withOpacity(0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: ElevatedButton(
-                              onPressed: () => _launchUrl('https://github.com/Onnesok?tab=repositories'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                foregroundColor: Colors.white,
-                                shadowColor: Colors.transparent,
-                                padding: buttonPadding,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'View All Projects',
-                                    style: GoogleFonts.inter(
-                                      fontSize: fontSize,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                  SizedBox(width: iconSpacing),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    size: iconSize,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: isWideScreen ? 40 : (isSmall ? 6 : 12),
+            vertical: isWideScreen ? 80 : (isSmall ? 18 : 40),
+          ),
+          child: content,
+        ),
+      ],
     );
   }
 
@@ -225,6 +178,7 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
     bool isDark,
     bool isWideScreen,
   ) {
+    final colorScheme = Theme.of(context).colorScheme;
     final isMobile = MediaQuery.of(context).size.width <= 600;
     return MouseRegion(
       onEnter: (_) => setState(() => _hoveredIndex = index),
@@ -238,39 +192,33 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
             ),
           );
         },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.001)
-            ..rotateX(_hoveredIndex == index ? -0.05 : 0)
-            ..rotateY(_hoveredIndex == index ? 0.05 : 0)
-            ..translate(0.0, _hoveredIndex == index ? -8.0 : 0.0, 0.0),
-          child: Container(
-            constraints: BoxConstraints(
-              maxHeight: isMobile ? 180 : 140,
-              minHeight: isMobile ? 160 : 120,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Card(
+            elevation: _hoveredIndex == index ? 12 : 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-            decoration: BoxDecoration(
-              color: isDark ? Colors.grey[900] : Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: isDark ? Colors.black.withOpacity(0.3) : Colors.grey.withOpacity(0.2),
-                  blurRadius: _hoveredIndex == index ? 16 : 8,
-                  offset: Offset(0, _hoveredIndex == index ? 8 : 4),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Stack(
-                children: [
-                  // Background Image
-                  Positioned.fill(
+            clipBehavior: Clip.antiAlias,
+            color: colorScheme.surface.withOpacity(isDark ? 0.7 : 0.95),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Lazy load image with placeholder
+                SizedBox(
+                  height: isWideScreen ? 180 : 160,
+                  child: VisibilityDetector(
+                    key: Key('project-image-$index'),
+                    onVisibilityChanged: (info) {
+                      if (info.visibleFraction > 0.1) {
+                        setState(() {
+                          // Mark as visible to trigger image load
+                        });
+                      }
+                    },
                     child: Image.asset(
                       project.imageUrl,
                       fit: BoxFit.cover,
-                      alignment: Alignment.center,
                       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
                         if (wasSynchronouslyLoaded) return child;
                         return AnimatedSwitcher(
@@ -278,195 +226,95 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
                           child: frame != null
                             ? child
                             : Container(
-                                color: isDark 
-                                  ? Colors.grey[900]
-                                  : Colors.grey[100],
+                                color: colorScheme.surface.withOpacity(0.7),
                                 child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: isDark 
-                                      ? Colors.blue.shade200 
-                                      : Colors.blue.shade900,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                                      child: SizedBox(
+                                        width: 60,
+                                        height: 60,
+                                        child: CircularProgressIndicator(
+                                          color: colorScheme.primary,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                         );
                       },
                       errorBuilder: (context, error, stackTrace) => Container(
-                        color: isDark 
-                          ? Color.fromARGB(255, 28, 28, 28)
-                          : Color.fromARGB(255, 240, 240, 240),
-                        child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.broken_image, 
-                                size: 24,
-                                color: isDark ? Colors.white38 : Colors.black38,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Image not available',
-                                style: TextStyle(
-                                  color: isDark ? Colors.white38 : Colors.black38,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        color: colorScheme.surface.withOpacity(0.5),
+                        child: const Center(child: Icon(Icons.broken_image, size: 40)),
                       ),
                     ),
                   ),
-                  // Gradient Overlay
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            isDark 
-                              ? Colors.black.withOpacity(0.7)
-                              : Colors.black.withOpacity(0.5),
-                            isDark 
-                              ? Colors.black.withOpacity(0.9)
-                              : Colors.black.withOpacity(0.7),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Content
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          project.title,
-                          style: GoogleFonts.inter(
-                            fontSize: isMobile ? 14 : 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            height: 1.2,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SizedBox(
+                    height: (isWideScreen ? 180 : 160) + 140, // image height + estimated text/buttons
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            project.title,
+                            style: GoogleFonts.inter(
+                              fontSize: isWideScreen ? 22 : 18,
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onSurface,
+                            ),
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          project.description,
-                          style: GoogleFonts.inter(
-                            fontSize: isMobile ? 11 : 9,
-                            color: Colors.white.withOpacity(0.8),
-                            height: 1.2,
+                          const SizedBox(height: 10),
+                          Text(
+                            project.description,
+                            style: GoogleFonts.inter(
+                              fontSize: isWideScreen ? 15 : 13,
+                              color: colorScheme.onSurface.withOpacity(0.8),
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const Spacer(),
-                        if (isMobile)
+                          const SizedBox(height: 16),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 4,
+                            children: project.technologies.map((tech) => Chip(
+                              label: Text(tech, style: GoogleFonts.inter(fontSize: 12)),
+                              backgroundColor: colorScheme.primary.withOpacity(0.08),
+                              labelStyle: TextStyle(color: colorScheme.primary),
+                            )).toList(),
+                          ),
+                          const SizedBox(height: 16),
                           Row(
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              if (project.demoUrl != null) ...[
-                                SizedBox(
-                                  height: 24,
-                                  child: TextButton.icon(
-                                    onPressed: () => _launchUrl(project.demoUrl!),
-                                    icon: const Icon(Icons.play_circle_outline, size: 12),
-                                    label: Text(
-                                      'Demo',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: Colors.white.withOpacity(0.9),
-                                      minimumSize: Size.zero,
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                              ],
-                              if (project.githubUrl != null)
-                                SizedBox(
-                                  height: 24,
-                                  child: TextButton.icon(
-                                    onPressed: () => _launchUrl(project.githubUrl!),
-                                    icon: const Icon(FontAwesomeIcons.github, size: 10),
-                                    label: Text(
-                                      'Code',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: Colors.white.withOpacity(0.9),
-                                      minimumSize: Size.zero,
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          )
-                        else
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (project.demoUrl != null) ...[
+                              if (project.demoUrl != null)
                                 IconButton(
                                   onPressed: () => _launchUrl(project.demoUrl!),
-                                  icon: const Icon(Icons.play_circle_outline, size: 12),
+                                  icon: const Icon(Icons.play_circle_outline),
                                   tooltip: 'Live Demo',
-                                  color: Colors.white.withOpacity(0.9),
-                                  padding: EdgeInsets.zero,
-                                  constraints: const BoxConstraints(
-                                    minWidth: 24,
-                                    minHeight: 24,
-                                  ),
+                                  color: colorScheme.primary,
                                 ),
-                                const SizedBox(width: 8),
-                              ],
                               if (project.githubUrl != null)
                                 IconButton(
                                   onPressed: () => _launchUrl(project.githubUrl!),
-                                  icon: const Icon(FontAwesomeIcons.github, size: 10),
+                                  icon: const Icon(FontAwesomeIcons.github),
                                   tooltip: 'View Code',
-                                  color: Colors.white.withOpacity(0.9),
-                                  padding: EdgeInsets.zero,
-                                  constraints: const BoxConstraints(
-                                    minWidth: 24,
-                                    minHeight: 24,
-                                  ),
+                                  color: colorScheme.primary,
                                 ),
                             ],
                           ),
-                      ],
-                    ),
-                  ),
-                  // Hover Overlay
-                  if (_hoveredIndex == index)
-                    Positioned.fill(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.blue.withOpacity(0.2),
-                              Colors.purple.withOpacity(0.2),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
                     ),
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -689,12 +537,12 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
             vertical: 12,
           ),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: isMobile ? 1 : (isWideScreen ? 4 : 2),
-            childAspectRatio: isMobile ? 1.8 : (isWideScreen ? 1.4 : 1.2),
+            crossAxisCount: 7,
+            childAspectRatio: 0.7,
             mainAxisSpacing: isMobile ? 16 : 12,
             crossAxisSpacing: isMobile ? 0 : 12,
           ),
-          itemCount: projects.length,
+          itemCount: projects.length < 7 ? projects.length : 7,
           itemBuilder: (context, index) => _buildProjectCard(
             context,
             projects[index],
@@ -704,6 +552,155 @@ class _ProjectsSectionState extends State<ProjectsSection> with SingleTickerProv
           ),
         );
       },
+    );
+  }
+
+  Widget _buildProjectCardHorizontal(
+    BuildContext context,
+    FeaturedProject project,
+    int index,
+    bool isDark,
+    double cardWidth,
+    double cardHeight,
+    bool isSmall,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isHovered = _hoveredIndex == index;
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hoveredIndex = index),
+      onExit: (_) => setState(() => _hoveredIndex = -1),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeInOut,
+        width: cardWidth,
+        height: cardHeight,
+        margin: EdgeInsets.symmetric(vertical: isSmall ? 2 : 4),
+        decoration: BoxDecoration(
+          color: colorScheme.surface.withOpacity(0.95),
+          borderRadius: BorderRadius.circular(isSmall ? 12 : 22),
+          boxShadow: [
+            if (isHovered)
+              BoxShadow(
+                color: colorScheme.primary.withOpacity(0.18),
+                blurRadius: 24,
+                offset: Offset(0, 8),
+              ),
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: Offset(0, 4),
+            ),
+          ],
+          border: Border.all(
+            color: isHovered ? colorScheme.primary.withOpacity(0.18) : colorScheme.primary.withOpacity(0.08),
+            width: 1.5,
+          ),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(isSmall ? 12 : 22),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProjectDetailsPage(project: project),
+                ),
+              );
+            },
+            child: SizedBox(
+              height: cardHeight,
+              child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(isSmall ? 12 : 22)),
+                      child: Image.asset(
+                        project.imageUrl,
+                        height: cardHeight * 0.42,
+                        width: cardWidth,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          height: cardHeight * 0.42,
+                          color: colorScheme.surface.withOpacity(0.5),
+                          child: const Center(child: Icon(Icons.broken_image, size: 40)),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(isSmall ? 10 : 18, isSmall ? 8 : 14, isSmall ? 10 : 18, isSmall ? 4 : 8),
+                      child: Text(
+                        project.title,
+                        style: GoogleFonts.inter(
+                          fontSize: isSmall ? 15 : 18,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: isSmall ? 10 : 18),
+                      child: Text(
+                        project.description,
+                        style: GoogleFonts.inter(
+                          fontSize: isSmall ? 12 : 14,
+                          color: colorScheme.onSurface.withOpacity(0.8),
+                        ),
+                        maxLines: isSmall ? 2 : 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(isSmall ? 10 : 18, isSmall ? 6 : 10, isSmall ? 10 : 18, 0),
+                      child: Wrap(
+                        spacing: isSmall ? 6 : 8,
+                        runSpacing: 4,
+                        children: project.technologies.take(isSmall ? 2 : 4).map((tech) => Chip(
+                          label: Text(tech, style: GoogleFonts.inter(fontSize: isSmall ? 10 : 12)),
+                          backgroundColor: colorScheme.primary.withOpacity(0.08),
+                          labelStyle: TextStyle(color: colorScheme.primary),
+                          padding: EdgeInsets.symmetric(horizontal: isSmall ? 6 : 8, vertical: 0),
+                          visualDensity: VisualDensity.compact,
+                        )).toList(),
+                      ),
+                    ),
+                    SizedBox(height: isSmall ? 8 : 16),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(isSmall ? 10 : 18, 0, isSmall ? 10 : 18, isSmall ? 8 : 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (project.demoUrl != null)
+                            IconButton(
+                              onPressed: () => _launchUrl(project.demoUrl!),
+                              icon: const Icon(Icons.play_circle_outline),
+                              tooltip: 'Live Demo',
+                              color: colorScheme.primary,
+                              iconSize: isSmall ? 20 : 24,
+                            ),
+                          if (project.githubUrl != null)
+                            IconButton(
+                              onPressed: () => _launchUrl(project.githubUrl!),
+                              icon: const Icon(FontAwesomeIcons.github),
+                              tooltip: 'View Code',
+                              color: colorScheme.primary,
+                              iconSize: isSmall ? 20 : 24,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,8 +1,13 @@
+// Only for Flutter web
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'dart:ui' as ui;
 
+// The following import is required for web platform view registry
+// ignore: undefined_prefixed_name
 void initializeYoutubePlayer(String viewType, String videoId) {
   // Register the view factory
+  // ignore: undefined_prefixed_name
   ui.platformViewRegistry.registerViewFactory(
     viewType,
     (int viewId) {

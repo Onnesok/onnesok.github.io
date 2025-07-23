@@ -1,97 +1,134 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/shared/widgets/header.dart';
-import 'package:portfolio/widgets/about_section.dart';
-import 'package:portfolio/widgets/projects_section.dart';
-import 'package:portfolio/widgets/contact_section.dart';
-import 'package:portfolio/widgets/footer.dart';
+import '../widgets/header.dart';
+import '../widgets/about_section.dart';
+import '../widgets/projects_section.dart';
+import '../widgets/contact_section.dart';
+import '../widgets/footer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isWideScreen = MediaQuery.of(context).size.width > 900;
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Theme.of(context).colorScheme.background,
-              Theme.of(context).colorScheme.background.withOpacity(0.8),
-            ],
+      appBar: AppBar(
+        elevation: 4,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            backgroundImage: AssetImage('assets/projects/default.jpg'), // Replace with your avatar
+            radius: 20,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Navigation Bar
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'RH',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        _buildNavItem(context, 'About', 0),
-                        const SizedBox(width: 20),
-                        _buildNavItem(context, 'Projects', 1),
-                        const SizedBox(width: 20),
-                        _buildNavItem(context, 'Contact', 2),
-                        const SizedBox(width: 20),
-                        IconButton(
-                          onPressed: () {
-                            final themeProvider = Theme.of(context).brightness == Brightness.dark;
-                            // Toggle theme
-                          },
-                          icon: Icon(
-                            Theme.of(context).brightness == Brightness.dark
-                                ? Icons.light_mode
-                                : Icons.dark_mode,
-                          ),
-                        ),
-                      ],
-                    ),
+        title: Text(
+          'Ratul Hasan',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.primary,
+            fontSize: 22,
+          ),
+        ),
+        actions: [
+          const SizedBox(width: 12),
+        ],
+      ),
+      drawer: isWideScreen ? null : Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/projects/default.jpg'),
+                    radius: 32,
+                  ),
+                  const SizedBox(height: 12),
+                  Text('Ratul Hasan', style: TextStyle(color: Colors.white, fontSize: 18)),
+                ],
+              ),
+            ),
+            _buildNavItem(context, 'About', 0, isDrawer: true),
+            _buildNavItem(context, 'Projects', 1, isDrawer: true),
+            _buildNavItem(context, 'Contact', 2, isDrawer: true),
+          ],
+        ),
+      ),
+      body: Row(
+        children: [
+          if (isWideScreen)
+            NavigationRail(
+              selectedIndex: 0,
+              onDestinationSelected: (int index) {
+                // Implement scroll to section
+              },
+              labelType: NavigationRailLabelType.all,
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(Icons.person),
+                  label: Text('About'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.work),
+                  label: Text('Projects'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.mail),
+                  label: Text('Contact'),
+                ),
+              ],
+            ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Theme.of(context).colorScheme.background,
+                    Theme.of(context).colorScheme.background.withOpacity(0.8),
                   ],
                 ),
               ),
-              
-              // Content Sections
-              const Header(),
-              const AboutSection(),
-              const ProjectsSection(),
-              const ContactSection(),
-              const Footer(),
-            ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Header(
+                      onViewWorkPressed: () {},
+                      onContactPressed: () {},
+                    ),
+                    AboutSection(),
+                    ProjectsSection(),
+                    ContactSection(),
+                    Footer(),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 
-  Widget _buildNavItem(BuildContext context, String title, int index) {
-    return TextButton(
-      onPressed: () {
-        // Add scroll to section functionality
+  Widget _buildNavItem(BuildContext context, String title, int index, {bool isDrawer = false}) {
+    return ListTile(
+      title: Text(title, style: TextStyle(fontSize: 16)),
+      leading: index == 0
+          ? Icon(Icons.person)
+          : index == 1
+              ? Icon(Icons.work)
+              : Icon(Icons.mail),
+      onTap: () {
+        // Implement scroll to section
+        if (isDrawer) Navigator.pop(context);
       },
-      style: TextButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 16,
-          color: Theme.of(context).colorScheme.onBackground,
-        ),
-      ),
     );
   }
 } 

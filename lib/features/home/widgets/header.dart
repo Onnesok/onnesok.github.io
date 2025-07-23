@@ -25,22 +25,21 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> with TickerProviderStateMixin {
-  late AnimationController _backgroundController;
-  late Animation<double> _backgroundAnimation;
   late AnimationController _flickerController;
   bool _animationsStarted = false;
+  static const int _particleCount = 6; // Fewer for performance
   final List<Particle> _particles = List.generate(
-    50,
+    _particleCount,
     (index) => Particle(
       position: Offset(
         Random().nextDouble() * 1000,
-        Random().nextDouble() * 500,
+        Random().nextDouble() * 400,
       ),
       velocity: Offset(
-        Random().nextDouble() * 1 - 0.5,
-        Random().nextDouble() * 1 - 0.5,
+        Random().nextDouble() * 0.3 - 0.15,
+        Random().nextDouble() * 0.3 - 0.15,
       ),
-      radius: Random().nextDouble() * 1.5 + 0.5,
+      radius: Random().nextDouble() * 1.2 + 0.5,
     ),
   );
 
@@ -49,16 +48,6 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _backgroundController = AnimationController(
-      duration: const Duration(seconds: 10),
-      vsync: this,
-    )..repeat();
-
-    _backgroundAnimation = Tween<double>(
-      begin: 0,
-      end: 2 * pi,
-    ).animate(_backgroundController);
-
     _flickerController = AnimationController(
       duration: const Duration(seconds: 2),
       vsync: this,
@@ -76,7 +65,6 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _backgroundController.dispose();
     _scrollController.dispose();
     _flickerController.dispose();
     super.dispose();
@@ -84,193 +72,72 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final isDark = true; // Always dark
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmall = screenWidth < 600;
 
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: _buildAnimatedBackground(screenWidth, screenHeight, isDark),
-        ),
-        Positioned.fill(
-          child: _buildGradientOverlay(isDark),
-        ),
-        Center(
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: 1200,
-            ),
-            padding: EdgeInsets.symmetric(
-              horizontal: isSmall ? 20 : screenWidth * 0.06,
-              vertical: 40,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: isSmall ? double.infinity : screenWidth * 0.6,
-                  child: Column(
-                    crossAxisAlignment: isSmall ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-                    children: [
-                      _buildProfileSection(context, isDark, isSmall),
-                      const SizedBox(height: 40),
-                      _buildNameSection(context, isDark, isSmall),
-                      const SizedBox(height: 24),
-                      _buildSocialIcons(isDark, isSmall),
-                      const SizedBox(height: 32),
-                      // Typewriter effect before buttons
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: _animationsStarted ? Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              border: Border.all(
-                                width: 2,
-                                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                              ),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Theme.of(context).colorScheme.surface.withOpacity(0.7),
-                                  Theme.of(context).colorScheme.background.withOpacity(0.5),
-                                ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  blurRadius: 16,
-                                  offset: Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: ShaderMask(
-                              shaderCallback: (bounds) => LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Theme.of(context).colorScheme.primary,
-                                  Theme.of(context).colorScheme.secondary,
-                                ],
-                              ).createShader(bounds),
-                              child: AnimatedTextKit(
-                                animatedTexts: [
-                                  TypewriterAnimatedText(
-                                    'Robotics enthusiast',
-                                    textStyle: TextStyle(
-                                      fontSize: isSmall ? 22 : 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 8,
-                                          color: Colors.black.withOpacity(0.25),
-                                          offset: Offset(2, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    speed: Duration(milliseconds: 80),
-                                  ),
-                                  TypewriterAnimatedText(
-                                    'Full stack developer',
-                                    textStyle: TextStyle(
-                                      fontSize: isSmall ? 22 : 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 8,
-                                          color: Colors.black.withOpacity(0.25),
-                                          offset: Offset(2, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    speed: Duration(milliseconds: 80),
-                                  ),
-                                  TypewriterAnimatedText(
-                                    'UI/UX designer',
-                                    textStyle: TextStyle(
-                                      fontSize: isSmall ? 22 : 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 8,
-                                          color: Colors.black.withOpacity(0.25),
-                                          offset: Offset(2, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    speed: Duration(milliseconds: 80),
-                                  ),
-                                ],
-                                repeatForever: true,
-                                pause: Duration(milliseconds: 1200),
-                                displayFullTextOnTap: true,
-                                stopPauseOnTap: true,
-                              ),
-                            ),
-                          ) : SizedBox.shrink(),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      _buildButtons(context, isDark, isSmall),
-                    ],
-                  ),
+    return SizedBox(
+      width: double.infinity,
+      height: 800,
+      child: Stack(
+        children: [
+          // Optional: gradient overlay for blending
+          IgnorePointer(
+            child: Container(
+              width: double.infinity,
+              height: 600,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.black.withOpacity(0.18),
+                    Colors.transparent,
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAnimatedBackground(double width, double height, bool isDark) {
-    return Positioned.fill(
-      child: AnimatedBuilder(
-        animation: _backgroundAnimation,
-        builder: (context, child) {
-          for (var particle in _particles) {
-            particle.update(Size(width, height));
-          }
-          return CustomPaint(
-            size: Size(width, height),
-            painter: ParticlesPainter(
-              particles: _particles,
-              isDark: isDark,
+          // Main content (no color/decoration)
+          Center(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: 1200,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: isSmall ? 20 : screenWidth * 0.06,
+              ),
+              height: 600,
+              // No color or decoration here!
+              child: isSmall
+                  ? SingleChildScrollView(
+                      child: _buildHeaderContent(context, isDark, isSmall, screenWidth),
+                    )
+                  : _buildHeaderContent(context, isDark, isSmall, screenWidth),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildGradientOverlay(bool isDark) {
-    return Positioned.fill(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark 
-              ? [
-                  Colors.black.withOpacity(0.8),
-                  Colors.blue.shade900.withOpacity(0.1),
-                  Colors.purple.shade900.withOpacity(0.1),
-                ]
-              : [
-                  Colors.white.withOpacity(0.8),
-                  Colors.blue.shade100.withOpacity(0.1),
-                  Colors.purple.shade100.withOpacity(0.1),
-                ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isDark 
+            ? [
+                Colors.black.withOpacity(0.8),
+                Colors.blue.shade900.withOpacity(0.1),
+                Colors.purple.shade900.withOpacity(0.1),
+              ]
+            : [
+                Colors.white.withOpacity(0.8),
+                Colors.blue.shade100.withOpacity(0.1),
+                Colors.purple.shade100.withOpacity(0.1),
+              ],
         ),
       ),
     );
@@ -617,6 +484,131 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
           ),
         ),
       ),
+    );
+  }
+
+  // Add this new method to encapsulate the content Column
+  Widget _buildHeaderContent(BuildContext context, bool isDark, bool isSmall, double screenWidth) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: isSmall ? double.infinity : screenWidth * 0.6,
+          child: Column(
+            crossAxisAlignment: isSmall ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+            children: [
+              _buildProfileSection(context, isDark, isSmall),
+              const SizedBox(height: 40),
+              _buildNameSection(context, isDark, isSmall),
+              const SizedBox(height: 24),
+              _buildSocialIcons(isDark, isSmall),
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: _animationsStarted
+                      ? Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              width: 2,
+                              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                            ),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Theme.of(context).colorScheme.surface.withOpacity(0.7),
+                                Theme.of(context).colorScheme.background.withOpacity(0.5),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.08),
+                                blurRadius: 16,
+                                offset: Offset(0, 8),
+                              ),
+                            ],
+                          ),
+                          child: ShaderMask(
+                            shaderCallback: (bounds) => LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Theme.of(context).colorScheme.primary,
+                                Theme.of(context).colorScheme.secondary,
+                              ],
+                            ).createShader(bounds),
+                            child: AnimatedTextKit(
+                              animatedTexts: [
+                                TypewriterAnimatedText(
+                                  'Robotics enthusiast',
+                                  textStyle: TextStyle(
+                                    fontSize: isSmall ? 22 : 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 8,
+                                        color: Colors.black.withOpacity(0.25),
+                                        offset: Offset(2, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  speed: Duration(milliseconds: 80),
+                                ),
+                                TypewriterAnimatedText(
+                                  'Full stack developer',
+                                  textStyle: TextStyle(
+                                    fontSize: isSmall ? 22 : 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 8,
+                                        color: Colors.black.withOpacity(0.25),
+                                        offset: Offset(2, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  speed: Duration(milliseconds: 80),
+                                ),
+                                TypewriterAnimatedText(
+                                  'UI/UX designer',
+                                  textStyle: TextStyle(
+                                    fontSize: isSmall ? 22 : 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 8,
+                                        color: Colors.black.withOpacity(0.25),
+                                        offset: Offset(2, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  speed: Duration(milliseconds: 80),
+                                ),
+                              ],
+                              repeatForever: true,
+                              pause: Duration(milliseconds: 1200),
+                              displayFullTextOnTap: true,
+                              stopPauseOnTap: true,
+                            ),
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                ),
+              ),
+              const SizedBox(height: 24),
+              _buildButtons(context, isDark, isSmall),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
