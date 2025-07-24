@@ -187,13 +187,8 @@ class _HeaderState extends State<Header> with TickerProviderStateMixin {
               padding: EdgeInsets.symmetric(
                 horizontal: isSmall ? 20 : screenWidth * 0.06,
               ),
-              height: 600,
               // No color or decoration here!
-              child: isSmall
-                  ? SingleChildScrollView(
-                      child: _buildHeaderContent(context, isDark, isSmall, screenWidth),
-                    )
-                  : _buildHeaderContent(context, isDark, isSmall, screenWidth),
+              child: _buildHeaderContent(context, isDark, isSmall, screenWidth),
             ),
           ),
         ],

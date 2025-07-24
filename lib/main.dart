@@ -8,6 +8,8 @@ import 'features/home/widgets/projects_section.dart';
 import 'features/home/widgets/contact_section.dart';
 import 'features/home/widgets/footer.dart';
 import 'features/home/widgets/loader.dart';
+import 'package:particles_flutter/particles_flutter.dart';
+import 'features/shared/widgets/particles_background.dart';
 
 void main() {
   runApp(
@@ -90,52 +92,60 @@ class _PortfolioPageState extends State<PortfolioPage> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            Header(
-              onViewWorkPressed: () => _scrollToSection(_projectsKey),
-              onContactPressed: () => _scrollToSection(_contactKey),
+      body: Stack(
+        children: [
+          const ParticlesBackground(
+            particleCount: 80,
+            isDark: true,
+          ),
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                Header(
+                  onViewWorkPressed: () => _scrollToSection(_projectsKey),
+                  onContactPressed: () => _scrollToSection(_contactKey),
+                ),
+                VisibilityDetector(
+                  key: const Key('about'),
+                  onVisibilityChanged: (info) {
+                    if (info.visibleFraction > 0.3) {
+                      // Animation will be handled internally by AboutSection
+                    }
+                  },
+                  child: const AboutSection(),
+                ),
+                VisibilityDetector(
+                  key: const Key('projects'),
+                  onVisibilityChanged: (info) {
+                    if (info.visibleFraction > 0.3) {
+                      // Trigger animation in ProjectsSection
+                    }
+                  },
+                  child: ProjectsSection(key: _projectsKey),
+                ),
+                VisibilityDetector(
+                  key: const Key('contact'),
+                  onVisibilityChanged: (info) {
+                    if (info.visibleFraction > 0.3) {
+                      // Trigger animation in ContactSection
+                    }
+                  },
+                  child: ContactSection(key: _contactKey),
+                ),
+                VisibilityDetector(
+                  key: const Key('footer'),
+                  onVisibilityChanged: (info) {
+                    if (info.visibleFraction > 0.3) {
+                      // Trigger animation in Footer
+                    }
+                  },
+                  child: const Footer(),
+                ),
+              ],
             ),
-            VisibilityDetector(
-              key: const Key('about'),
-              onVisibilityChanged: (info) {
-                if (info.visibleFraction > 0.3) {
-                  // Animation will be handled internally by AboutSection
-                }
-              },
-              child: const AboutSection(),
-            ),
-            VisibilityDetector(
-              key: const Key('projects'),
-              onVisibilityChanged: (info) {
-                if (info.visibleFraction > 0.3) {
-                  // Trigger animation in ProjectsSection
-                }
-              },
-              child: ProjectsSection(key: _projectsKey),
-            ),
-            VisibilityDetector(
-              key: const Key('contact'),
-              onVisibilityChanged: (info) {
-                if (info.visibleFraction > 0.3) {
-                  // Trigger animation in ContactSection
-                }
-              },
-              child: ContactSection(key: _contactKey),
-            ),
-            VisibilityDetector(
-              key: const Key('footer'),
-              onVisibilityChanged: (info) {
-                if (info.visibleFraction > 0.3) {
-                  // Trigger animation in Footer
-                }
-              },
-              child: const Footer(),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: AnimatedOpacity(
         opacity: _showScrollToTop ? 1.0 : 0.0,
