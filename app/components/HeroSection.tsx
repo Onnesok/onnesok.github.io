@@ -113,6 +113,38 @@ export default function HeroSection() {
         };
     }, []);
 
+    const [displayText, setDisplayText] = useState('');
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [loopNum, setLoopNum] = useState(0);
+    const [typingSpeed, setTypingSpeed] = useState(150);
+
+    const roles = ["Ratul Hasan"];
+
+    useEffect(() => {
+        const handleType = () => {
+            const i = loopNum % roles.length;
+            const fullRole = roles[i];
+
+            setDisplayText(
+                isDeleting
+                    ? fullRole.substring(0, displayText.length - 1)
+                    : fullRole.substring(0, displayText.length + 1)
+            );
+
+            setTypingSpeed(isDeleting ? 50 : 150);
+
+            if (!isDeleting && displayText === fullRole) {
+                setTimeout(() => setIsDeleting(true), 1500);
+            } else if (isDeleting && displayText === '') {
+                setIsDeleting(false);
+                setLoopNum(loopNum + 1);
+            }
+        };
+
+        const timer = setTimeout(handleType, typingSpeed);
+        return () => clearTimeout(timer);
+    }, [displayText, isDeleting, loopNum, typingSpeed, roles]);
+
     return (
         <section className="hero-section">
             <canvas ref={canvasRef} className="hero-canvas" />
@@ -133,17 +165,26 @@ export default function HeroSection() {
                         Hello, I am
                     </motion.h2>
                     <motion.h1
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.3, duration: 0.6 }}
                         className="heading-1 hero-title text-gradient"
+                        style={{ display: 'flex', alignItems: 'center' }}
                     >
-                        Ratul Hasan
+                        {displayText}
+                        <motion.span
+                            animate={{ opacity: [0, 1, 0] }}
+                            transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                            style={{
+                                display: 'inline-block',
+                                width: '3px',
+                                height: '0.8em',
+                                backgroundColor: 'var(--primary-accent)',
+                                marginLeft: '4px'
+                            }}
+                        />
                     </motion.h1>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.5, duration: 0.6 }}
+                        transition={{ delay: 2.6, duration: 0.6 }}
                         className="heading-2 hero-title"
                     >
                         Passionate Developer & Robotics Enthusiast
@@ -151,7 +192,7 @@ export default function HeroSection() {
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 1.7, duration: 0.8 }}
+                        transition={{ delay: 2.9, duration: 0.8 }}
                         className="hero-description text-secondary"
                     >
                         I craft seamless digital experiences and engineer sophisticated hardware solutions. Bridging the gap between code and robotics to solve real-world problems.
@@ -160,7 +201,7 @@ export default function HeroSection() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.9, duration: 0.5 }}
+                        transition={{ delay: 3.2, duration: 0.5 }}
                         className="hero-actions"
                     >
                         <a href="#software-projects" className="btn btn-primary">
