@@ -946,6 +946,175 @@ a {
   }
 }
 
+/* More Slice Styling */
+.more-slice .more-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(0, 229, 255, 0.2), transparent 70%),
+    linear-gradient(225deg, #020205 0%, #050510 100%);
+  transition: transform 0.6s ease;
+}
+
+.more-tech-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background-image: linear-gradient(rgba(0, 229, 255, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.2) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center center;
+  mask-image: linear-gradient(to bottom, white, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, white, transparent);
+  transition: opacity 0.6s ease;
+}
+
+.more-slice.active .more-tech-grid {
+  opacity: 0.3;
+  animation: grid-pulse 4s linear infinite;
+}
+
+@keyframes grid-pulse {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 30px 30px;
+  }
+}
+
+.more-slice.active .more-bg-gradient {
+  transform: scale(1.1);
+  background: radial-gradient(circle at 70% 30%, rgba(0, 229, 255, 0.3), transparent 70%),
+    linear-gradient(225deg, #020205 0%, #08081a 100%);
+}
+
+/* More Modal Styling */
+.more-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(3, 3, 5, 0.85);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.more-modal-content {
+  background: rgba(15, 15, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  padding: 4rem;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(0, 229, 255, 0.1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #fff 0%, var(--primary-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1.5px;
+}
+
+.modal-text {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.modal-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.stat-card {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary-accent);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.modal-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: white;
+  color: black;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.modal-cta-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 640px) {
+  .more-modal-content {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .modal-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+
 /* ============================================
    IMMERSIVE SLIDER WIDGET (HARDWARE PORTFOLIO)
    ============================================ */
