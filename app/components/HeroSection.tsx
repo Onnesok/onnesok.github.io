@@ -210,7 +210,7 @@ export default function HeroSection() {
                         <a href="#contact" className="btn btn-secondary">
                             <Mail size={18} /> Contact Me
                         </a>
-                        <a href="/Ratul_Hasan_CV.pdf" download className="btn btn-secondary">
+                        <a href="/cv.pdf" download className="btn btn-secondary">
                             <Download size={18} /> Download CV
                         </a>
                     </motion.div>
