@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && (if exist build rmdir /s /q build) && ren out build",
+    "preview": "npx serve build",
     "start": "next start",
     "lint": "eslint"
   },
