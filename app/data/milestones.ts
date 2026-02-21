@@ -190,4 +190,14 @@ export const allMilestones: Milestone[] = [
         color: "#00e5ff",
         type: 'software'
     },
+    {
+        id: "ieee-yesist-national",
+        title: "IEEE YESIST12 National Round",
+        subtitle: "Maker Fair Bangladesh",
+        image: "/projects/milestone/texhibition.jpeg",
+        tag: "Innovation",
+        description: "Showcased breakthrough technical innovation at the IEEE YESIST12 National Round (Maker Fair) in Bangladesh, focusing on scalable hardware-software impact.",
+        color: "#10b981",
+        type: 'summit'
+    }
 ];

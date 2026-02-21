@@ -91,6 +91,17 @@ const workExperience = [
         location: "Hybrid",
         summary: "Engineering AI-driven robotics solutions, including the Pixi humanoid robot platform series.",
         color: "#f43f5e"
+    },
+    {
+        id: "learners-boosters",
+        company: "Learners' Boosters",
+        role: "Lecturer",
+        period: "2025 – Present",
+        endYear: 9999, // Present
+        startYear: 2025,
+        location: "Remote / Hybrid",
+        summary: "Mentoring and teaching hands-on App Development, Robotics, and AI to future tech leaders, bridging the gap between academia and industry.",
+        color: "#fbbf24"
     }
 ];
 
@@ -109,7 +120,7 @@ const sortedExperience = [...workExperience].sort((a, b) => {
 const snakeOrder = [
     sortedExperience[0], sortedExperience[1], sortedExperience[2], // Row 1
     sortedExperience[5], sortedExperience[4], sortedExperience[3], // Row 2
-    sortedExperience[6], sortedExperience[7]                      // Row 3
+    sortedExperience[6], sortedExperience[7], sortedExperience[8]  // Row 3
 ];
 
 export default function WorkSection() {
@@ -134,14 +145,14 @@ export default function WorkSection() {
                     {/* The Triple-Winding Snake Path SVG */}
                     <svg className="snake-path-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
                         <motion.path
-                            d="M 166 160 L 500 160 L 833 160 C 950 160, 950 450, 833 450 L 500 450 L 166 450 C 50 450, 50 740, 166 740 L 500 740"
+                            d="M 166 160 L 500 160 L 833 160 C 950 160, 950 450, 833 450 L 500 450 L 166 450 C 50 450, 50 740, 166 740 L 500 740 L 833 740"
                             fill="none"
                             stroke="rgba(255, 255, 255, 0.03)"
                             strokeWidth="50"
                             strokeLinecap="round"
                         />
                         <motion.path
-                            d="M 166 160 L 500 160 L 833 160 C 950 160, 950 450, 833 450 L 500 450 L 166 450 C 50 450, 50 740, 166 740 L 500 740"
+                            d="M 166 160 L 500 160 L 833 160 C 950 160, 950 450, 833 450 L 500 450 L 166 450 C 50 450, 50 740, 166 740 L 500 740 L 833 740"
                             fill="none"
                             stroke="url(#snake-gradient-sorted)"
                             strokeWidth="4"
