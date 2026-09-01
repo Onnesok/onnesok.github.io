@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { MapPin, Hexagon, Zap, Layers } from 'lucide-react';
+import { MapPin, Hexagon, Layers } from 'lucide-react';
 
 const workExperience = [
     {
@@ -9,7 +9,7 @@ const workExperience = [
         company: "Onnesok",
         role: "Founder",
         period: "2020 – Present",
-        endYear: 9999, // Present
+        endYear: 9999,
         startYear: 2020,
         location: "Dhaka, Bangladesh",
         summary: "Leading an independent tech venture dedicated to building scalable software and immersive gaming experiences, reaching 100K+ users.",
@@ -20,7 +20,7 @@ const workExperience = [
         company: "BRAC UNIVERSITY RS",
         role: "App Dev Instructor",
         period: "2024 – Present",
-        endYear: 9999, // Present
+        endYear: 9999,
         startYear: 2024,
         location: "On-site",
         summary: "Instructing and mentoring students in mobile application development, focusing on cross-platform frameworks and ecosystem best practices.",
@@ -30,8 +30,8 @@ const workExperience = [
         id: "sdp-dev",
         company: "BRAC SKILL DEVELOPMENT PROGRAM",
         role: "Student Developer",
-        period: "2025 – Present",
-        endYear: 9999, // Present
+        period: "2025 – 2026",
+        endYear: 2026,
         startYear: 2025,
         location: "Hybrid",
         summary: "Collaborating on software initiatives within the SDP ecosystem, enhancing technical infrastructure and student engagement tools.",
@@ -97,37 +97,61 @@ const workExperience = [
         company: "Learners' Boosters",
         role: "Lecturer",
         period: "2025 – Present",
-        endYear: 9999, // Present
+        endYear: 9999,
         startYear: 2025,
         location: "Remote / Hybrid",
         summary: "Mentoring and teaching hands-on App Development, Robotics, and AI to future tech leaders, bridging the gap between academia and industry.",
         color: "#fbbf24"
+    },
+    {
+        id: "cse-ra",
+        company: "Department of CSE, BRAC University",
+        role: "Research Assistant",
+        period: "2026 – Present",
+        endYear: 9999,
+        startYear: 2026,
+        location: "On-site",
+        summary: "Departmental Research Assistant in Computer Science and Engineering, supporting faculty-led research and academic projects across the CSE department under the supervision of Dr. Md. Golam Rabiul Alam.",
+        color: "#f97316"
     }
 ];
 
-// 1. Pin Onnesok first, then sort the rest by endYear (Present first), then by startYear descending
+type WorkItem = (typeof workExperience)[number] | null;
+
+const leadOrder = ['cse-ra', 'rs-inst', 'onnesok', 'learners-boosters'];
+
 const sortedExperience = [...workExperience].sort((a, b) => {
-    if (a.id === 'onnesok') return -1;
-    if (b.id === 'onnesok') return 1;
+    const aLead = leadOrder.indexOf(a.id);
+    const bLead = leadOrder.indexOf(b.id);
+    if (aLead !== -1 || bLead !== -1) {
+        if (aLead === -1) return 1;
+        if (bLead === -1) return -1;
+        return aLead - bLead;
+    }
     if (b.endYear !== a.endYear) return b.endYear - a.endYear;
     return b.startYear - a.startYear;
 });
 
-// Winding order for 3-Column 3-Row Snake Path:
-// Row 1 (L->R): 0, 1, 2
-// Row 2 (R->L): 5, 4, 3
-// Row 3 (L->R): 6, 7
-const snakeOrder = [
-    sortedExperience[0], sortedExperience[1], sortedExperience[2], // Row 1
-    sortedExperience[5], sortedExperience[4], sortedExperience[3], // Row 2
-    sortedExperience[6], sortedExperience[7], sortedExperience[8]  // Row 3
-];
+const COLS = 3;
+const paddedExperience: WorkItem[] = [...sortedExperience];
+while (paddedExperience.length % COLS !== 0) {
+    paddedExperience.push(null);
+}
+while (paddedExperience.length < 12) {
+    paddedExperience.push(null);
+}
+
+const rowCount = paddedExperience.length / COLS;
+const snakeOrder: WorkItem[] = [];
+for (let row = 0; row < rowCount; row++) {
+    const slice = paddedExperience.slice(row * COLS, row * COLS + COLS);
+    snakeOrder.push(...(row % 2 === 1 ? [...slice].reverse() : slice));
+}
 
 export default function WorkSection() {
     return (
         <section id="work" className="section-padding" style={{ position: 'relative', overflow: 'hidden', background: '#030305' }}>
             <div className="container-wide">
-                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -140,19 +164,17 @@ export default function WorkSection() {
                     </div>
                 </motion.div>
 
-                {/* Snake Grid Container (3 Columns, 3 Rows) */}
                 <div className="snake-grid-container">
-                    {/* The Triple-Winding Snake Path SVG */}
-                    <svg className="snake-path-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                    <svg className="snake-path-svg" viewBox="0 0 1000 1320" preserveAspectRatio="none">
                         <motion.path
-                            d="M 166 160 L 500 160 L 833 160 C 950 160, 950 450, 833 450 L 500 450 L 166 450 C 50 450, 50 740, 166 740 L 500 740 L 833 740"
+                            d="M 166 130 L 500 130 L 833 130 C 950 130, 950 430, 833 430 L 500 430 L 166 430 C 50 430, 50 730, 166 730 L 500 730 L 833 730 C 950 730, 950 1030, 833 1030 L 500 1030 L 166 1030"
                             fill="none"
                             stroke="rgba(255, 255, 255, 0.03)"
                             strokeWidth="50"
                             strokeLinecap="round"
                         />
                         <motion.path
-                            d="M 166 160 L 500 160 L 833 160 C 950 160, 950 450, 833 450 L 500 450 L 166 450 C 50 450, 50 740, 166 740 L 500 740 L 833 740"
+                            d="M 166 130 L 500 130 L 833 130 C 950 130, 950 430, 833 430 L 500 430 L 166 430 C 50 430, 50 730, 166 730 L 500 730 L 833 730 C 950 730, 950 1030, 833 1030 L 500 1030 L 166 1030"
                             fill="none"
                             stroke="url(#snake-gradient-sorted)"
                             strokeWidth="4"
@@ -172,11 +194,12 @@ export default function WorkSection() {
                         </defs>
                     </svg>
 
-                    {/* Grid Items (3 Columns) */}
                     <div className="snake-items-wrapper">
                         {snakeOrder.map((work, index) => {
-                            if (!work) return null;
                             const rowIndex = Math.floor(index / 3);
+                            if (!work) {
+                                return <div key={`ghost-${index}`} className="snake-item snake-item-ghost" aria-hidden="true" />;
+                            }
                             return (
                                 <motion.div
                                     key={work.id}
@@ -186,14 +209,11 @@ export default function WorkSection() {
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
                                 >
-                                    {/* The Node */}
                                     <div className="snake-node">
                                         <div className="node-glow" style={{ background: work.color }} />
                                         <div className="node-point" style={{ background: work.color }} />
                                         <Hexagon size={40} strokeWidth={1} className="node-hex-ring" style={{ color: work.color, opacity: 0.2 }} />
                                     </div>
-
-                                    {/* The Card */}
                                     <div className="snake-card glass-panel-interactive">
                                         <div className="card-accent-rail" style={{ background: work.color }} />
                                         <div className="card-header-row">
@@ -241,7 +261,7 @@ export default function WorkSection() {
                     width: 100%;
                     max-width: 1440px;
                     margin: 0 auto;
-                    min-height: 1000px;
+                    min-height: 1320px;
                 }
 
                 .snake-path-svg {
@@ -258,7 +278,7 @@ export default function WorkSection() {
                     z-index: 2;
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
-                    grid-template-rows: repeat(3, 300px);
+                    grid-template-rows: repeat(4, 260px);
                     gap: 6rem 3rem;
                 }
 
@@ -268,6 +288,11 @@ export default function WorkSection() {
                     align-items: center;
                     justify-content: center;
                     text-align: center;
+                }
+
+                .snake-item-ghost {
+                    visibility: hidden;
+                    pointer-events: none;
                 }
 
                 .snake-node {
@@ -395,6 +420,9 @@ export default function WorkSection() {
                     }
                     .snake-item {
                         width: 100%;
+                    }
+                    .snake-item-ghost {
+                        display: none;
                     }
                     .snake-card {
                         max-width: 100%;
