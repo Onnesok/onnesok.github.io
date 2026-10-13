@@ -1,0 +1,165 @@
+/* Cream, rounded corners, and a clipped upper-right edge from the reference. */
+.scene-button,
+.scene-button.collection-link,
+.header-contact,
+.pill-button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 45px;
+  padding: 13px 21px;
+  border: 0;
+  border-radius: 9px;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 16px, 100% 100%, 0 100%);
+  background: #f4f2eb;
+  color: #151318;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: none;
+}
+.scene-button:hover,
+.scene-button.collection-link:hover,
+.header-contact:hover,
+.pill-button:hover {
+  background: #efbe7d;
+  color: #151318;
+}
+.scene-button.secondary,
+.hero-actions .scene-button.secondary {
+  padding: 13px 19px;
+  background: #5b5549;
+  color: #e9e4d7;
+}
+.scene-button.secondary::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 8px;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 16px, 100% 100%, 0 100%);
+  background: #101111;
+  z-index: -1;
+}
+.scene-button.secondary:hover {
+  background: #efbe7d;
+  color: #efbe7d;
+}
+.scene-button:focus-visible,
+.header-contact:focus-visible,
+.pill-button:focus-visible,
+.project-view-link:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 3px #c28b3f;
+}
+.scene-button.secondary:focus-visible::before {
+  box-shadow: inset 0 0 0 2px #efbe7d;
+}
+.hero-actions .scene-button {
+  padding: 13px 19px;
+  font-size: 10px;
+}
+.hero-actions .button-disc {
+  order: 2;
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  color: inherit;
+}
+.header-contact {
+  min-height: 38px;
+  padding: 11px 18px;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.scene-button > svg,
+.header-contact > svg,
+.pill-button > svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.sculpted-action.project-view-link {
+  min-height: 34px;
+  margin-top: 17px;
+  padding: 9px 13px;
+  gap: 9px;
+  background: #f4f2eb;
+  color: #151318;
+  border-radius: 7px;
+  clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 11px, 100% 100%, 0 100%);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.project-view-link svg,
+.sculpted-link:hover .project-view-link svg {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  transform: none;
+}
+.sculpted-link:hover .project-view-link {
+  background: #efbe7d;
+}
+.portfolio-footer .contact-email {
+  min-height: 45px;
+  padding: 13px 19px;
+  gap: 12px;
+  border: 0;
+  border-radius: 9px;
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 16px, 100% 100%, 0 100%);
+  background: #f4f2eb;
+  color: #151318;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.portfolio-footer .contact-email:hover {
+  background: #efbe7d;
+}
+.portfolio-footer .contact-email .button-disc {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+}
+.portfolio-footer .contact-email:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 3px #c28b3f;
+}
+@media (max-width: 760px) {
+  .hero-actions .scene-button,
+  .hero-actions .scene-button.secondary {
+    padding: 12px 15px;
+    font-size: 9px;
+    letter-spacing: 0.9px;
+  }
+  .header-contact {
+    min-height: 38px;
+    padding: 11px 13px;
+    font-size: 8px;
+    letter-spacing: 0.7px;
+    gap: 7px;
+  }
+}
+@media (max-width: 420px) {
+  .sculpted-action.project-view-link {
+    padding-inline: 10px;
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    gap: 7px;
+  }
+}

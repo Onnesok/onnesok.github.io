@@ -1,0 +1,128 @@
+[
+  [
+    {
+      "label": "Python",
+      "icon": "/icons/skills/python.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+    },
+    {
+      "label": "C++",
+      "icon": "/icons/skills/cplusplus.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+    },
+    {
+      "label": "JavaScript",
+      "icon": "/icons/skills/javascript.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+    },
+    {
+      "label": "TypeScript",
+      "icon": "/icons/skills/typescript.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+    },
+    {
+      "label": "Dart",
+      "icon": "/icons/skills/dart.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg"
+    },
+    {
+      "label": "React",
+      "icon": "/icons/skills/react.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+    },
+    {
+      "label": "Next.js",
+      "icon": "/icons/skills/nextjs.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+      "invert": true
+    },
+    {
+      "label": "Flutter",
+      "icon": "/icons/skills/flutter.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
+    },
+    {
+      "label": "Node.js",
+      "icon": "/icons/skills/nodejs.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+    },
+    {
+      "label": "Tailwind CSS",
+      "icon": "/icons/skills/tailwindcss.svg",
+      "source": "https://cdn.simpleicons.org/tailwindcss/06B6D4"
+    },
+    {
+      "label": "Firebase",
+      "icon": "/icons/skills/firebase.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"
+    },
+    {
+      "label": "Git",
+      "icon": "/icons/skills/git.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+    }
+  ],
+  [
+    {
+      "label": "Arduino",
+      "icon": "/icons/skills/arduino.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg"
+    },
+    {
+      "label": "Raspberry Pi",
+      "icon": "/icons/skills/raspberrypi.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg"
+    },
+    {
+      "label": "ESP32",
+      "icon": "/icons/skills/esp32.svg",
+      "source": "https://cdn.simpleicons.org/espressif/E7352C"
+    },
+    {
+      "label": "ROS",
+      "icon": "/icons/skills/ros.svg",
+      "source": "https://cdn.simpleicons.org/ros/22314E",
+      "invert": true
+    },
+    {
+      "label": "Machine Learning",
+      "icon": "/icons/skills/tensorflow.svg",
+      "source": "https://cdn.simpleicons.org/tensorflow/FF6F00"
+    },
+    {
+      "label": "Docker",
+      "icon": "/icons/skills/docker.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+    },
+    {
+      "label": "Linux",
+      "icon": "/icons/skills/linux.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+    },
+    {
+      "label": "Godot",
+      "icon": "/icons/skills/godot.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-plain.svg"
+    },
+    {
+      "label": "3D Modeling",
+      "icon": "/icons/skills/blender.svg",
+      "source": "https://cdn.simpleicons.org/blender/F5792A"
+    },
+    {
+      "label": "HTML/CSS",
+      "icon": "/icons/skills/html5.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+    },
+    {
+      "label": "MongoDB",
+      "icon": "/icons/skills/mongodb.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+    },
+    {
+      "label": "PostgreSQL",
+      "icon": "/icons/skills/postgresql.svg",
+      "source": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+    }
+  ]
+]

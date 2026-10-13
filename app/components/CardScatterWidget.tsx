@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FeaturedProject } from '../data/projects';
@@ -20,11 +20,6 @@ const scatterPositions = [
 export default function CardScatterWidget({ projects }: { projects: FeaturedProject[] }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [activeZIndex, setActiveZIndex] = useState(10);
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     // Provide a simple list on mobile, scatter on desktop
     return (
@@ -33,7 +28,6 @@ export default function CardScatterWidget({ projects }: { projects: FeaturedProj
             <div className="card-scatter-canvas hide-mobile" ref={containerRef}>
                 {projects.map((project, index) => {
                     const pos = scatterPositions[index % scatterPositions.length];
-                    const Controls = useAnimation(); // Allows us to programatically reset position if needed
 
                     return (
                         <motion.div
@@ -47,7 +41,7 @@ export default function CardScatterWidget({ projects }: { projects: FeaturedProj
                             initial={{
                                 top: pos.top,
                                 left: pos.left,
-                                rotate: mounted ? pos.rotation : 0,
+                                rotate: 0,
                                 opacity: 0,
                                 scale: 0.8,
                                 zIndex: index
@@ -103,7 +97,7 @@ export default function CardScatterWidget({ projects }: { projects: FeaturedProj
 
             {/* Mobile Simple Stack Alternative (Since dragging UI is awkward on touch phones) */}
             <div className="card-scatter-mobile show-mobile">
-                {projects.map((project, index) => (
+                {projects.map((project) => (
                     <div key={`mobile-${project.slug}`} className="scatter-mobile-card">
                         <Link href={`/projects/software/${project.slug}`} className="scatter-mobile-link">
                             <div className="scatter-mobile-img-wrapper">

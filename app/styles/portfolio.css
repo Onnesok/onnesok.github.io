@@ -1,0 +1,972 @@
+/* Lower sections share the approved hero's charcoal, cream, and brass palette. */
+.portfolio-section {
+  padding: 68px 52px;
+  background: var(--bg);
+  border-bottom: 1px solid #ffffff0c;
+  scroll-margin-top: 24px;
+}
+.portfolio-section.research-scene,
+.portfolio-section.about-scene,
+.portfolio-section.honors-scene {
+  margin: 0;
+  min-height: 0;
+}
+.portfolio-section.honors-scene {
+  display: block;
+}
+.portfolio-section-heading {
+  margin-bottom: 32px;
+}
+.portfolio-section .scene-section-label,
+.portfolio-footer .scene-section-label {
+  color: #aaa99f;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  gap: 15px;
+}
+.section-number {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.section-heading-rule {
+  width: 58px;
+  height: 1px;
+  background: #ffffff1c;
+}
+.portfolio-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 20px;
+}
+.portfolio-heading-row h2 {
+  font: 600 clamp(48px, 5.3vw, 82px)/1 var(--display);
+  letter-spacing: -1.3px;
+}
+.portfolio-heading-row p {
+  color: #aaa7a0;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 12px;
+  max-width: 760px;
+}
+.portfolio-heading-row > a {
+  flex-shrink: 0;
+  margin-bottom: 3px;
+}
+
+/* Shape language from the supplied reference: a curved text recess and diagonal corner tile. */
+.sculpted-link,
+.sculpted-link.feature-exhibit {
+  position: relative;
+  display: block;
+  min-width: 0;
+  border-radius: 22px;
+  background: transparent;
+  overflow: visible;
+  isolation: isolate;
+}
+.sculpted-link:focus-visible {
+  outline-offset: 8px;
+}
+.sculpted-frame.portfolio-bento {
+  position: relative;
+  height: 520px;
+  min-width: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+}
+.sculpted-main,
+.sculpted-corner {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.sculpted-main {
+  background: #171717;
+}
+.sculpted-main > img {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 450ms;
+}
+.sculpted-image-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    #090c0df5 0%,
+    #090c0d40 32%,
+    transparent 62%
+  );
+  pointer-events: none;
+}
+.sculpted-copy {
+  position: absolute;
+  z-index: 2;
+  top: 15px;
+  left: 5px;
+  width: 42%;
+  padding-right: 16px;
+}
+.sculpted-category {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  color: var(--accent);
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.sculpted-copy h3 {
+  font: 600 42px/1.05 var(--display);
+  letter-spacing: -0.6px;
+  margin-top: 13px;
+  text-wrap: balance;
+}
+.sculpted-copy h3 em {
+  color: var(--accent);
+}
+.sculpted-copy p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #bbb7ae;
+  margin-top: 12px;
+  max-width: 300px;
+}
+.sculpted-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 12px;
+  color: var(--ink);
+  margin-top: 19px;
+}
+.sculpted-action svg {
+  width: 31px;
+  height: 31px;
+  padding: 7px;
+  border: 1px solid #efbe7d66;
+  border-radius: 50%;
+  color: var(--accent);
+  transition:
+    background 200ms,
+    color 200ms,
+    transform 200ms;
+}
+.sculpted-link:hover .sculpted-action svg {
+  background: var(--accent);
+  color: #111516;
+  transform: translateX(3px);
+}
+.sculpted-caption {
+  position: absolute;
+  left: 27px;
+  bottom: 32px;
+  width: 58%;
+  color: #e5e0d2;
+}
+.sculpted-caption > span {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 1.3px;
+  color: #c6b493;
+}
+.sculpted-caption > strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+.sculpted-corner {
+  background: #24201b;
+}
+.sculpted-corner-symbol {
+  position: absolute;
+  left: 80%;
+  right: 4%;
+  top: 76%;
+  bottom: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cba976;
+}
+.sculpted-corner-symbol > svg {
+  width: 62px;
+  height: 62px;
+}
+.sculpted-project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 28px;
+}
+.sculpted-featured-project {
+  grid-column: 1 / -1;
+}
+.sculpted-featured-project .sculpted-frame {
+  height: 590px;
+}
+.sculpted-featured-project .sculpted-copy {
+  top: 21px;
+  padding-right: 34px;
+}
+.sculpted-featured-project .sculpted-copy h3 {
+  font-size: 68px;
+  margin-top: 18px;
+}
+.sculpted-featured-project .sculpted-copy p {
+  font-size: 14px;
+  max-width: 340px;
+  line-height: 1.8;
+  margin-top: 18px;
+}
+.sculpted-featured-project .sculpted-action {
+  margin-top: 24px;
+}
+.sculpted-featured-project .sculpted-caption {
+  left: 35px;
+  bottom: 37px;
+}
+.sculpted-featured-project .sculpted-caption > strong {
+  font-size: 17px;
+}
+.sculpted-featured-project .sculpted-corner-symbol > svg {
+  width: 95px;
+  height: 95px;
+}
+.sculpted-pixi .sculpted-main > img {
+  object-fit: cover;
+  object-position: 50% 15%;
+  padding: 0;
+}
+.sculpted-pixi .sculpted-main {
+  background: #171717;
+}
+.sculpted-software .sculpted-main > img {
+  object-position: 70% top;
+}
+.sculpted-game .sculpted-main > img {
+  object-position: 60% center;
+}
+.sculpted-research.sculpted-frame {
+  height: 570px;
+}
+.sculpted-research .sculpted-copy {
+  top: 21px;
+  padding-right: 25px;
+}
+.sculpted-research .sculpted-copy h3 {
+  font-size: clamp(43px, 4.5vw, 64px);
+}
+.sculpted-research .sculpted-copy p {
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 19px;
+  max-width: 345px;
+}
+.sculpted-research .sculpted-main > img {
+  object-position: 68% center;
+  filter: brightness(0.78) saturate(0.75);
+}
+.sculpted-research .sculpted-caption > strong {
+  font-size: 17px;
+}
+.sculpted-research .sculpted-corner-symbol > svg {
+  width: 90px;
+  height: 90px;
+}
+.research-facts {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 35px;
+  margin-top: 28px;
+  padding-top: 23px;
+  border-top: 1px solid #ffffff14;
+}
+.research-facts h3 {
+  font-size: 12px;
+  font-weight: 500;
+  color: #d7d4c7;
+}
+.research-facts p {
+  font-size: 12px;
+  color: #aaa7a0;
+  line-height: 1.8;
+  margin-top: 9px;
+}
+.portfolio-section .project-directory {
+  margin-top: 29px;
+  border-color: #ffffff14;
+}
+.portfolio-section .directory-toggle {
+  padding: 20px 2px;
+}
+.portfolio-section .directory-toggle strong {
+  font-size: 14px;
+}
+.portfolio-section .directory-toggle .eyebrow {
+  color: #aaa7a0;
+  font-size: 10px;
+}
+.portfolio-section .index-project {
+  border-color: #ffffff10;
+}
+.portfolio-section .index-project:hover {
+  background: #111516;
+}
+
+/* About and experience use direct text rather than hidden panels or card controls. */
+.about-simple-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 70px;
+}
+.about-biography h3,
+.about-skills > h3 {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  line-height: 1.4;
+}
+.about-biography h3 > span {
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 400;
+  margin-left: 10px;
+  white-space: nowrap;
+}
+.about-biography > p {
+  max-width: 470px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #b8b4ab;
+  margin-top: 21px;
+}
+.about-location {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 28px;
+  font-size: 12px;
+  color: #c6bcab;
+}
+.about-location svg {
+  color: var(--accent);
+}
+.about-skills .skill-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  margin-top: 25px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.about-skills .skill-list h4 {
+  font-size: 13px;
+  font-weight: 500;
+  color: #d5c1a0;
+  line-height: 1.5;
+}
+.about-skills .skill-list p {
+  font-size: 12px;
+  color: #aaa7a0;
+  line-height: 1.9;
+  margin-top: 9px;
+}
+.experience-role-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 45px;
+  padding: 0;
+  margin: 0;
+}
+.experience-role-list > li {
+  display: grid;
+  grid-template-columns: 93px 1fr;
+  gap: 22px;
+  padding: 26px 0;
+  border-top: 1px solid #ffffff14;
+  min-width: 0;
+}
+.experience-date {
+  color: var(--accent);
+  font-size: 11px;
+  line-height: 1.8;
+  padding-top: 3px;
+}
+.experience-role-list h3 {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  line-height: 1.4;
+}
+.experience-company {
+  color: #d0cbc0;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 6px;
+}
+.experience-summary {
+  color: #aaa7a0;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 13px;
+}
+
+/* Three visible achievements; the archive holds the complete collection. */
+.recognition-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.recognition-card {
+  display: block;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 14px;
+}
+.recognition-image-wrap {
+  position: relative;
+  aspect-ratio: 1.45;
+}
+.recognition-image {
+  position: absolute;
+  inset: 0;
+  background: #171717;
+  overflow: hidden;
+}
+.recognition-image img {
+  object-fit: cover;
+  transition: transform 400ms;
+}
+.recognition-card:hover .recognition-image img {
+  transform: scale(1.035);
+}
+.honor-arrow {
+  position: absolute;
+  right: 5px;
+  bottom: 4px;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #efbe7d55;
+  border-radius: 50%;
+  color: var(--accent);
+  background: #1b1916;
+  transition:
+    background 200ms,
+    color 200ms;
+}
+.recognition-card:hover .honor-arrow {
+  background: var(--accent);
+  color: #111516;
+}
+.recognition-card-copy {
+  padding: 22px 0 0;
+}
+.recognition-card-copy .sculpted-category {
+  font-size: 9px;
+}
+.recognition-card-copy h3 {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+.recognition-card-copy p {
+  margin-top: 8px;
+  color: #aaa7a0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.honor-view-link {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 11px;
+  margin-top: 14px;
+  color: var(--accent);
+}
+
+/* Contact has a single labeled email action and the existing social links. */
+.contact-bento-wrap {
+  padding: 62px 52px 28px;
+}
+.contact-bento.portfolio-bento {
+  position: relative;
+  display: block;
+  min-height: 540px;
+  padding: 44px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+.footer-workshop-image {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: url(#footer-workshop-curve);
+}
+.footer-workshop-image img {
+  object-fit: cover;
+  object-position: 74% center;
+}
+.footer-workshop-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #090c0d88, transparent 50%);
+}
+.contact-message {
+  position: relative;
+  z-index: 2;
+  max-width: 46%;
+}
+.contact-message h2 {
+  font: 600 clamp(62px, 6.8vw, 110px)/0.98 var(--display);
+  letter-spacing: -1.8px;
+  margin-top: 28px;
+}
+.contact-message h2 em {
+  color: var(--accent);
+}
+.contact-message > p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #aaa7a0;
+  margin-top: 23px;
+}
+.contact-invitation {
+  border-left: 1px solid #ffffff12;
+  padding-left: 36px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.contact-invitation-icon {
+  display: none;
+}
+.contact-invitation h3 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.6px;
+}
+.contact-invitation > p {
+  color: #aaa7a0;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 10px;
+}
+.portfolio-footer .contact-email {
+  font-size: 12px;
+  padding: 5px 5px 5px 14px;
+  gap: 10px;
+  border-color: #ffffff24;
+  background: transparent;
+  backdrop-filter: none;
+  max-width: 100%;
+  margin-top: 26px;
+}
+.portfolio-footer .contact-email > span:first-child {
+  overflow-wrap: anywhere;
+}
+.portfolio-footer .contact-email .button-disc {
+  width: 35px;
+  height: 35px;
+  margin-left: 0;
+}
+.portfolio-footer .contact-email:hover {
+  border-color: var(--accent);
+  background: transparent;
+}
+.portfolio-footer .footer-bottom {
+  background: var(--bg);
+  padding-block: 25px 35px;
+}
+.portfolio-footer .footer-name,
+.portfolio-footer .footer-socials a {
+  font-size: 11px;
+}
+.portfolio-footer .footer-name span {
+  font-size: 10px;
+}
+
+@media (max-width: 1100px) {
+  .portfolio-section {
+    padding: 58px 32px;
+  }
+  .sculpted-frame.portfolio-bento {
+    height: 520px;
+  }
+  .sculpted-copy h3 {
+    font-size: 35px;
+  }
+  .sculpted-copy p {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .sculpted-copy {
+    width: 44%;
+    padding-right: 12px;
+  }
+  .sculpted-featured-project .sculpted-frame {
+    height: 540px;
+  }
+  .sculpted-featured-project .sculpted-copy h3 {
+    font-size: 57px;
+  }
+  .sculpted-featured-project .sculpted-copy p {
+    font-size: 13px;
+  }
+  .sculpted-featured-project .sculpted-action {
+    margin-top: 17px;
+  }
+  .sculpted-research.sculpted-frame {
+    height: 540px;
+  }
+  .sculpted-research .sculpted-copy h3 {
+    font-size: 48px;
+  }
+  .sculpted-research .sculpted-copy p {
+    font-size: 13px;
+  }
+  .sculpted-research .sculpted-copy {
+    width: 43%;
+  }
+  .about-simple-grid {
+    gap: 40px;
+  }
+  .experience-role-list {
+    gap: 0 30px;
+  }
+  .experience-role-list > li {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .contact-bento-wrap {
+    padding: 55px 32px 25px;
+  }
+  .contact-bento.portfolio-bento {
+    padding: 32px;
+    min-height: 520px;
+  }
+  .contact-invitation {
+    padding-left: 26px;
+  }
+  .portfolio-footer .contact-email {
+    font-size: 11px;
+  }
+}
+@media (min-width: 761px) and (max-width: 900px) {
+  .sculpted-project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .portfolio-section {
+    padding: 48px 23px;
+    scroll-margin-top: 18px;
+  }
+  .portfolio-section-heading {
+    margin-bottom: 26px;
+  }
+  .portfolio-section .scene-section-label,
+  .portfolio-footer .scene-section-label {
+    font-size: 9px;
+    letter-spacing: 1.1px;
+    gap: 11px;
+  }
+  .portfolio-heading-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 17px;
+    gap: 16px;
+  }
+  .portfolio-heading-row h2 {
+    font-size: clamp(47px, 8vw, 64px);
+    letter-spacing: -0.8px;
+  }
+  .portfolio-heading-row p {
+    font-size: 12px;
+    margin-top: 11px;
+  }
+  .portfolio-heading-row > a {
+    padding: 10px 14px;
+    font-size: 11px;
+  }
+  .sculpted-project-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .sculpted-featured-project {
+    grid-column: auto;
+  }
+  .sculpted-frame.portfolio-bento,
+  .sculpted-featured-project .sculpted-frame,
+  .sculpted-research.sculpted-frame {
+    height: 560px;
+  }
+  .sculpted-copy,
+  .sculpted-featured-project .sculpted-copy,
+  .sculpted-research .sculpted-copy {
+    top: 14px;
+    left: 3px;
+    width: 46%;
+    padding-right: 12px;
+  }
+  .sculpted-copy h3,
+  .sculpted-featured-project .sculpted-copy h3,
+  .sculpted-research .sculpted-copy h3 {
+    font-size: 40px;
+    margin-top: 13px;
+  }
+  .sculpted-copy p,
+  .sculpted-featured-project .sculpted-copy p,
+  .sculpted-research .sculpted-copy p {
+    font-size: 12px;
+    line-height: 1.75;
+    margin-top: 13px;
+  }
+  .sculpted-category {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .sculpted-action,
+  .sculpted-featured-project .sculpted-action {
+    margin-top: 17px;
+    font-size: 11px;
+    gap: 8px;
+  }
+  .sculpted-action svg {
+    width: 27px;
+    height: 27px;
+    padding: 6px;
+  }
+  .sculpted-caption,
+  .sculpted-featured-project .sculpted-caption {
+    left: 19px;
+    bottom: 28px;
+    width: 61%;
+  }
+  .sculpted-caption > strong,
+  .sculpted-featured-project .sculpted-caption > strong,
+  .sculpted-research .sculpted-caption > strong {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .sculpted-caption > span {
+    font-size: 8px;
+  }
+  .sculpted-corner-symbol,
+  .sculpted-featured-project .sculpted-corner-symbol,
+  .sculpted-research .sculpted-corner-symbol {
+    left: 79%;
+    right: 3%;
+    top: 81%;
+    bottom: 5%;
+  }
+  .sculpted-corner-symbol > svg,
+  .sculpted-featured-project .sculpted-corner-symbol > svg,
+  .sculpted-research .sculpted-corner-symbol > svg {
+    width: 42px;
+    height: 42px;
+  }
+  .sculpted-pixi .sculpted-main > img {
+    object-position: left center;
+    padding: 0;
+  }
+  .sculpted-research .sculpted-main > img {
+    object-position: 62% center;
+  }
+  .research-facts {
+    grid-template-columns: 1fr;
+    gap: 21px;
+  }
+  .about-simple-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .about-biography > p {
+    font-size: 13px;
+    max-width: none;
+  }
+  .about-biography h3,
+  .about-skills > h3 {
+    font-size: 23px;
+  }
+  .about-skills .skill-list {
+    gap: 23px;
+  }
+  .experience-role-list {
+    grid-template-columns: 1fr;
+  }
+  .experience-role-list > li {
+    grid-template-columns: 90px 1fr;
+    gap: 18px;
+    padding: 24px 0;
+  }
+  .experience-role-list h3 {
+    font-size: 18px;
+  }
+  .recognition-gallery {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+  .recognition-image-wrap {
+    aspect-ratio: 1.6;
+  }
+  .recognition-card-copy h3 {
+    font-size: 22px;
+  }
+  .contact-bento-wrap {
+    padding: 45px 23px 20px;
+  }
+  .contact-bento.portfolio-bento {
+    padding: 27px;
+    min-height: 790px;
+  }
+  .contact-message {
+    max-width: none;
+  }
+  .footer-workshop-image {
+    inset: 405px 0 0;
+    clip-path: none;
+    border-radius: 44px 8px 44px 8px;
+  }
+  .footer-workshop-image img {
+    object-position: 75% center;
+  }
+  .footer-workshop-image::after {
+    background: linear-gradient(180deg, #090c0d55, transparent 35%);
+  }
+  .contact-message h2 {
+    font-size: 76px;
+    margin-top: 24px;
+  }
+  .contact-message > p {
+    font-size: 12px;
+  }
+  .contact-invitation {
+    border-left: 0;
+    border-top: 1px solid #ffffff12;
+    padding: 27px 0 0;
+  }
+  .contact-invitation h3 {
+    font-size: 22px;
+  }
+  .portfolio-footer .contact-email {
+    font-size: 12px;
+  }
+  .portfolio-footer .footer-bottom {
+    padding-inline: 23px;
+    gap: 17px;
+  }
+  .portfolio-footer .footer-name {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .portfolio-footer .footer-socials {
+    gap: 16px;
+  }
+}
+@media (max-width: 420px) {
+  .portfolio-section {
+    padding-inline: 18px;
+  }
+  .sculpted-frame.portfolio-bento,
+  .sculpted-featured-project .sculpted-frame,
+  .sculpted-research.sculpted-frame {
+    height: 580px;
+  }
+  .sculpted-copy h3,
+  .sculpted-featured-project .sculpted-copy h3 {
+    font-size: 35px;
+  }
+  .sculpted-research .sculpted-copy h3 {
+    font-size: 36px;
+  }
+  .sculpted-copy p,
+  .sculpted-featured-project .sculpted-copy p,
+  .sculpted-research .sculpted-copy p {
+    font-size: 11px;
+  }
+  .sculpted-copy,
+  .sculpted-featured-project .sculpted-copy,
+  .sculpted-research .sculpted-copy {
+    width: 45%;
+  }
+  .sculpted-action {
+    gap: 7px;
+    font-size: 10px;
+  }
+  .sculpted-caption > strong,
+  .sculpted-featured-project .sculpted-caption > strong,
+  .sculpted-research .sculpted-caption > strong {
+    font-size: 12px;
+  }
+  .about-skills .skill-list {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .experience-role-list > li {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+  .experience-role-list h3 {
+    font-size: 19px;
+  }
+  .contact-bento-wrap {
+    padding-inline: 18px;
+  }
+  .contact-bento.portfolio-bento {
+    padding: 23px;
+  }
+  .contact-message h2 {
+    font-size: 68px;
+  }
+  .portfolio-footer .contact-email {
+    font-size: 10px;
+  }
+  .portfolio-footer .footer-bottom {
+    padding-inline: 18px;
+    flex-wrap: wrap;
+  }
+  .portfolio-footer .footer-name {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .portfolio-footer .footer-name span {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .portfolio-footer .footer-copyright {
+    margin: 0 0 0 auto;
+  }
+  .portfolio-footer .footer-socials {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sculpted-frame *,
+  .recognition-card * {
+    transition: none !important;
+  }
+  .sculpted-link:hover .sculpted-action svg,
+  .recognition-card:hover .recognition-image img {
+    transform: none;
+  }
+}

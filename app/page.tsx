@@ -1,25 +1,32 @@
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import SkillsScroller from './components/SkillsScroller';
-import AboutSection from './components/AboutSection';
-import WorkSection from './components/WorkSection';
-import AchievementsSection from './components/AchievementsSection';
-import SoftwareProjectsSection from './components/SoftwareProjectsSection';
-import HardwareProjectsSection from './components/HardwareProjectsSection';
-import ContactFooter from './components/ContactFooter';
+import Navbar from "./components/Navbar";
+import WorkshopHero from "./components/WorkshopHero";
+import SkillsScroller from "./components/SkillsScroller";
+import ResearchFolio from "./components/ResearchFolio";
+import SelectedExhibits from "./components/SelectedExhibits";
+import AboutWorkshop from "./components/AboutWorkshop";
+import ExperienceSection from "./components/ExperienceSection";
+import HonorsShelf from "./components/HonorsShelf";
+import ContactFooter from "./components/ContactFooter";
 
 export default function Home() {
   return (
-    <main>
+    <div className="workshop-world">
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
       <Navbar />
-      <HeroSection />
-      <SkillsScroller />
-      <AboutSection />
-      <WorkSection />
-      <AchievementsSection />
-      <SoftwareProjectsSection />
-      <HardwareProjectsSection />
+      <main id="main-content">
+        <WorkshopHero />
+        <SkillsScroller />
+        <ResearchFolio />
+        <section id="projects" className="work-scene portfolio-section">
+          <SelectedExhibits />
+        </section>
+        <AboutWorkshop />
+        <ExperienceSection />
+        <HonorsShelf />
+      </main>
       <ContactFooter />
-    </main>
+    </div>
   );
 }

@@ -34,7 +34,7 @@ export default function AboutSection() {
                     >
                         <h2 className="heading-2 text-gradient" style={{ marginBottom: '1.5rem' }}>About Me</h2>
                         <div className="text-secondary" style={{ lineHeight: '1.85', display: 'flex', flexDirection: 'column', gap: '1.1rem', fontSize: '1.05rem' }}>
-                            <p>I am Ratul Hasan, a passionate tech enthusiast and creator from Bangladesh, specializing in game development, robotics, AI integration, and software automation. I have extensive experience building projects with Godot Engine, ranging from 2D and 3D games to web-based and mobile platforms, often leveraging AI to accelerate development and optimize workflows.</p>
+                            <p>I am Ratul Hasan, a passionate tech enthusiast and inventor from Bangladesh, specializing in game development, robotics, AI integration, and software automation. I have extensive experience building projects with Godot Engine, ranging from 2D and 3D games to web-based and mobile platforms, often leveraging AI to accelerate development and optimize workflows.</p>
                             <p>Beyond game development, I have hands-on experience in robotics projects, where I design, program, and integrate intelligent systems for real-world and simulated applications. I also implement automation solutions, connecting data systems with interactive tools to improve efficiency and user experience.</p>
                             <p>I am continuously exploring new technologies and frameworks, combining creativity with technical expertise to bring innovative ideas to life.</p>
                         </div>

@@ -28,7 +28,7 @@ export default function InteractiveListWidget({ projects }: { projects: Featured
                         >
                             <div className="list-row-content">
 
-                                <span className="list-row-meta hide-mobile">0{index + 1} // {project.categoryLabel}</span>
+                                <span className="list-row-meta hide-mobile">0{index + 1} {'/'} {project.categoryLabel}</span>
 
                                 <h3 className="list-row-title">{project.title}</h3>
 
@@ -45,7 +45,7 @@ export default function InteractiveListWidget({ projects }: { projects: Featured
 
                             {/* Mobile specific layout since list is simpler on narrow screens */}
                             <div className="list-row-mobile-cats show-mobile">
-                                <span className="list-row-meta">0{index + 1} // {project.categoryLabel}</span>
+                                <span className="list-row-meta">0{index + 1} {'/'} {project.categoryLabel}</span>
                                 <div className="list-row-icon">
                                     <ArrowUpRight size={20} />
                                 </div>

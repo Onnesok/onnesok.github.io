@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FeaturedProject } from '../data/projects';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Video, Gamepad2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 
 export default function ImmersiveSliderWidget({ projects }: { projects: FeaturedProject[] }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,11 +16,12 @@ export default function ImmersiveSliderWidget({ projects }: { projects: Featured
         if (isHovered) return;
 
         const autoPlayTimer = setInterval(() => {
-            paginate(1);
+            setDirection(1);
+            setCurrentIndex(index => (index + 1) % projects.length);
         }, 5000); // Auto slide every 5 seconds
 
         return () => clearInterval(autoPlayTimer);
-    }, [currentIndex, isHovered]);
+    }, [isHovered, projects.length]);
 
     const slideVariants = {
         enter: (direction: number) => {

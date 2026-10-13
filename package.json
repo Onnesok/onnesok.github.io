@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && (if exist build rmdir /s /q build) && ren out build",
-    "preview": "npx serve build",
+    "build": "next build && node scripts/normalize-export.mjs",
+    "preview": "node scripts/serve-export.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:browser": "node scripts/verify-portfolio.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.34.3",
@@ -17,11 +18,13 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^10.0.1",
-    "eslint-config-next": "^0.2.4",
+    "eslint-config-next": "^16.4.0",
+    "prettier": "^3.9.10",
     "typescript": "^5"
   }
 }
