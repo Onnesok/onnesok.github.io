@@ -1,2 +1,7 @@
-:HL["/_next/static/chunks/22f5or-julq_m.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"projects","param":null,"prefetchHints":4128,"slots":{"children":{"name":"hardware","param":null,"prefetchHints":4160,"slots":{"children":{"name":"slug","param":{"type":"d","key":"theo-jansen-walker","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"u3YYe0uOVv98XBHQo-Jo5"}
+:HL["/_next/static/chunks/3at-425a1vm_w.css","style"]
+:HL["/_next/static/media/teko_variable-s.p.0r3pp0iae7ajv.ttf","font",{"crossOrigin":"","type":"font/ttf"}]
+4:[["children",{"s":"__PAGE__","h":160}]]
+3:[["children",{"s":{"n":"slug","t":"d","k":"theo-jansen-walker","s":[]},"h":96,"c":"$Q4"}]]
+2:[["children",{"s":"hardware","h":96,"c":"$Q3"}]]
+1:[["children",{"s":"projects","h":96,"c":"$Q2"}]]
+0:{"b":"V_2MGcCeCzw3OiUV1EW5t","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
