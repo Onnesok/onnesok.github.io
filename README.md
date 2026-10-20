@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Dependency security
+
+The Next.js ESLint plugin pins `fast-glob`, which pulls in `braces` affected by
+[GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm).
+Until upstream removes that dependency or a patched release is available, a scoped
+npm override uses `tools/next-eslint-glob`. This adapter implements the plugin's
+`globSync` directory lookup using patched `glob`, including directory filtering.
+The override applies only to the Next.js lint plugin. ESLint 9 satisfies the lint
+plugins' supported peer ranges.
+
+After dependency updates, run `npm run test:lint-glob`, `npm audit`,
+`npm run lint`, and `npm run build`. Remove the adapter, direct `fast-glob`
+dependency, and override together when upstream resolves the vulnerable chain.
+
 ## Getting Started
 
 First, run the development server:

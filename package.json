@@ -8,7 +8,8 @@
     "preview": "node scripts/serve-export.mjs",
     "start": "next start",
     "lint": "eslint",
-    "test:browser": "node scripts/verify-portfolio.mjs"
+    "test:browser": "node scripts/verify-portfolio.mjs",
+    "test:lint-glob": "node scripts/verify-lint-glob.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.34.3",
@@ -22,9 +23,15 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^10.0.1",
-    "eslint-config-next": "^16.4.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.2",
+    "fast-glob": "file:./tools/next-eslint-glob",
     "prettier": "^3.9.10",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@next/eslint-plugin-next": {
+      "fast-glob": "$fast-glob"
+    }
   }
 }
